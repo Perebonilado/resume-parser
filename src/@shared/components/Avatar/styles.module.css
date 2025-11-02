@@ -1,0 +1,29 @@
+@reference "tailwindcss";
+
+.root {
+    @apply relative  overflow-hidden flex items-center justify-center border border-[#360B58] p-[2px] transition-all ease-out duration-300
+}
+
+.slateBg {
+    @apply bg-slate-300
+}
+
+.round {
+    @apply rounded-full
+}
+
+.square {
+    @apply rounded-lg;
+}
+
+.sm {
+    @apply w-8 h-8
+}
+
+.md {
+    @apply w-12 h-12
+}
+
+.lg {
+    @apply w-[250px] h-[250px]
+}

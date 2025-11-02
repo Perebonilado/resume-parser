@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../prisma-dist"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  createdAt DateTime @default(now())
+
+  resume Resume[]
+  @@index([createdAt(sort: Desc)])
+}
+
+model Resume {
+  id String @id @default(cuid())
+  userId Int @unique
+
+  fileName   String
+  fileSize   Int
+  fileUrl    String
+  resumeData Json
+
+  uploadedAt DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([uploadedAt(sort: Desc)])
+}
+
+model ResumeHistory {
+  id String @id @default(cuid())
+  resumeId Int @unique
+  userId Int @unique
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume Resume @relation(fields[resumeId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt(sort: Desc)])
+}
+

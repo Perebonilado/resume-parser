@@ -1,0 +1,1 @@
+export const bucketName = "pdfs_bucket";
