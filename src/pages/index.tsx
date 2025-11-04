@@ -8,11 +8,20 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { getFileNameWithoutExtension } from "@/lib";
 import { bucketName } from "@/constants";
+import { useDispatch } from "react-redux";
+import {
+  resetLoaderState,
+  setLoading,
+  setLoadingMessage,
+} from "@/features/loaderSlice";
+import { useRouter } from "next/router";
+import { ResumeUploadModel } from "@/business/ResumeUploadHandler";
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const dispatch = useDispatch();
 
   const handleUploadFileToBucket = async (file: File) => {
     try {
@@ -40,6 +49,8 @@ export default function Home() {
     }
   };
 
+  const router = useRouter();
+
   return (
     <Layout>
       <div className="flex flex-col gap-[28px] mx-auto w-full max-w-[500px] pt-2 pb-10">
@@ -65,13 +76,26 @@ export default function Home() {
           onClick={async () => {
             if (!fileUrl || !selectedFile) return;
             try {
-              await axios.post("http://localhost:3000/api/upload", {
-                fileName: getFileNameWithoutExtension(selectedFile.name),
-                fileSize: selectedFile.size,
-                fileUrl: fileUrl,
-              });
+              dispatch(
+                setLoadingMessage({
+                  loadingMessage: "Extracting Resume Data",
+                })
+              );
+              dispatch(setLoading({ loading: true }));
+              const resume = await axios.post<ResumeUploadModel>(
+                "http://localhost:3000/api/upload",
+                {
+                  fileName: getFileNameWithoutExtension(selectedFile.name),
+                  fileSize: selectedFile.size,
+                  fileUrl: fileUrl,
+                }
+              );
+              dispatch(resetLoaderState());
+              toast.success("Resume Data Extracted Successfully");
+              router.push(`/resume/${resume.data.resumeId}`);
             } catch (error) {
               toast.error("Something went wrong while extracting file data");
+              dispatch(resetLoaderState());
             }
           }}
         />

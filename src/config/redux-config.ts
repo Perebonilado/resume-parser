@@ -1,10 +1,12 @@
 import { navigationSliceReducer } from "@/features/navigationSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import loaderSliceReducer from "../features/loaderSlice";
 
 export const reduxStore = configureStore({
   reducer: {
     navigationSliceReducer: navigationSliceReducer,
+    loaderReducer: loaderSliceReducer
   },
 });
 
