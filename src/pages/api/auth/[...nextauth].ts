@@ -13,7 +13,7 @@ export const authOptions = {
       clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET || "fKAiumroLqkFdJHDwQDcT+g/BtG7hFGUfRQT8ZW/gsc=" ,
   pages: {
     signIn: "/auth/login",
   },
