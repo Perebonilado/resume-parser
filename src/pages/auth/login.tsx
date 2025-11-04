@@ -55,7 +55,7 @@ export default function LoginPage({
                     starticon={<GoogleIcon />}
                     type="button"
                     onClick={() => {
-                      signIn(Object.values(providers)[0].id)
+                      signIn(Object.values(providers)[0]?.id || "google")
                     }}
                     className="!w-full !text-gray-700 !font-semibold !py-4 !rounded-xl hover:!bg-gray-50 hover:!border-gray-300 transition-all duration-200 hover:shadow-md"
                   />
