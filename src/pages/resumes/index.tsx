@@ -19,7 +19,7 @@ const Resumes = () => {
   const fetchResumes = async () => {
     try {
       dispatch(
-        setLoadingMessage({ loadingMessage: "Fetching resume details" })
+        setLoadingMessage({ loadingMessage: "Fetching resums" })
       );
       dispatch(setLoading({ loading: true }));
 

@@ -31,7 +31,7 @@ const CollapsibleButton: FC<Props> = ({
     <button
       id={title}
       className={cn(
-        "relative flex items-center px-2 w-full transition-all duration-300 h-[40px]",
+        "relative flex items-center px-2 w-full transition-all duration-300 h-[40px] cursor-pointer",
         {
           ["bg-[#F2E1FF] !text-[#2F004F] rounded-md"]: isActive,
           ["!text-white"]: !isActive,

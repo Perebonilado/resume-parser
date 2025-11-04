@@ -3,36 +3,36 @@ import { AuthenticatedRequest, withAuth } from "@/lib/middleware/withAuth";
 import { withErrorHandler } from "@/lib/middleware/withErrorHandler";
 import { withMethodCheck } from "@/lib/middleware/withMethodCheck";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ErrorResponse } from "../upload";
+import { ErrorResponse } from "./upload";
+import { UserRepositoryImpl } from "@/repository/UserRepository";
 import {
-  ResumeRepository,
-  ResumeRepositoryImpl,
-} from "@/repository/ResumeRepository";
-import { Resume } from "../../../../prisma-dist";
-import {
-  UserRepository,
-  UserRepositoryImpl,
-} from "@/repository/UserRepository";
+    ResumeHistoryModel,
+  ResumeHistoryRepository,
+  ResumeHistoryRepositoryImpl,
+} from "@/repository/ResumeHistoryRepository";
 
 type SuccessResponse = {
-  data: Resume[];
+  data: ResumeHistoryModel[];
 };
 
-async function getResumeByUserId(
+async function getResumeHistory(
   req: AuthenticatedRequest,
   res: NextApiResponse<ErrorResponse | SuccessResponse>
 ) {
-  const userRepository: UserRepository = new UserRepositoryImpl();
-  const resumeRepository: ResumeRepository = new ResumeRepositoryImpl();
+  const userEmail = req.userEmail;
 
-  const user = await userRepository.findByEmail(req.userEmail);
+  const userRepository = new UserRepositoryImpl();
+  const resumeHistoryRepository: ResumeHistoryRepository =
+    new ResumeHistoryRepositoryImpl();
+  const user = await userRepository.findByEmail(userEmail);
 
   if (!user) {
     return res.status(404).json({ error: "User not found" } as ErrorResponse);
   }
 
-  const resume = await resumeRepository.findByUserId(user.id);
-  res.status(200).json({ data: resume });
+  const resumeHistory = await resumeHistoryRepository.findAllByUserId(user.id);
+
+  return res.status(200).json({ data: resumeHistory });
 }
 
 export default compose(
@@ -40,7 +40,7 @@ export default compose(
   withMethodCheck(["GET"]),
   withAuth
 )(
-  getResumeByUserId as (
+  getResumeHistory as (
     req: NextApiRequest,
     res: NextApiResponse
   ) => Promise<void>
