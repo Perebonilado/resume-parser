@@ -20,7 +20,7 @@ export default function ResumeWorkExperience({ experiences }: Props) {
         Work Experience
       </h2>
       <div className="space-y-5">
-        {experiences.map((exp, i) => (
+        {experiences?.map((exp, i) => (
           <div key={i} className="relative pl-0">
             <div className="flex justify-between items-start mb-1">
               <div>

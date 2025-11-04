@@ -3,10 +3,6 @@ import { RootState } from "@/config/redux-config";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
-import {
-  UserRepository,
-  UserRepositoryImpl,
-} from "@/repository/UserRepository";
 import { setUser } from "@/features/userSlice";
 
 interface ContextOptions {}

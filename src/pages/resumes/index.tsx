@@ -1,16 +1,62 @@
 import ResumeList from "@/@modules/resumes/ResumeList";
 import Container from "@/@shared/ui/Container";
 import Layout from "@/layout";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Resume } from "../../../prisma-dist";
+import { useDispatch } from "react-redux";
+import {
+  resetLoaderState,
+  setLoading,
+  setLoadingMessage,
+} from "@/features/loaderSlice";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Resumes = () => {
+  const [resumes, setResumes] = useState<Resume[]>([]);
+  const dispatch = useDispatch();
+
+  const fetchResumes = async () => {
+    try {
+      dispatch(
+        setLoadingMessage({ loadingMessage: "Fetching resume details" })
+      );
+      dispatch(setLoading({ loading: true }));
+
+      const resumesData = await axios.get<{ data: Resume[] }>(
+        "http://localhost:3000/api/resume"
+      );
+
+      if (!resumesData.data.data) return;
+
+      setResumes(resumesData.data.data);
+    } catch (error) {
+      toast.error("something went wrong fetching resume data");
+    } finally {
+      dispatch(resetLoaderState());
+    }
+  };
+
+  useEffect(() => {
+    fetchResumes();
+  }, []);
+
   return (
     <Layout>
       <Container className="py-10">
         <h1 className="text-2xl font-bold mb-6 text-gray-800">
           Your Uploaded Resumes
         </h1>
-        <ResumeList resumes={dummyResumes} />
+        <ResumeList
+          resumes={resumes.map((r) => {
+            return {
+              fileName: r.fileName,
+              fileSize: r.fileSize,
+              id: r.id,
+              uploadedAt: r.uploadedAt.toString(),
+            };
+          })}
+        />
       </Container>
     </Layout>
   );

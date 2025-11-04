@@ -7,10 +7,6 @@ import Container from "@/@shared/ui/Container";
 import Layout from "@/layout";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  ResumeRepository,
-  ResumeRepositoryImpl,
-} from "@/repository/ResumeRepository";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 import {
@@ -19,11 +15,21 @@ import {
   setLoadingMessage,
 } from "@/features/loaderSlice";
 import { Resume as ResumeType } from "@/zodSchemas/ResumeSchema";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Resume = () => {
   const [resume, setResume] = useState<ResumeType | null>(null);
-  const params = useParams();
+  const [id, setId] = useState<number | null>(null);
+  const router = useRouter();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (router.query) {
+      const { id } = router.query;
+      setId(Number(id));
+    }
+  }, [router.query]);
 
   const fetchResumeData = async () => {
     try {
@@ -31,26 +37,28 @@ const Resume = () => {
         setLoadingMessage({ loadingMessage: "Fetching resume details" })
       );
       dispatch(setLoading({ loading: true }));
-      const { id } = params;
-      if (!id) return;
 
-      const resumeRepository: ResumeRepository = new ResumeRepositoryImpl();
-      const data = await resumeRepository.findById(Number(id));
-      if (!data) return;
-      const resumeData = data.resumeData!;
-      const resumeInfo = JSON.parse(resumeData as string) as ResumeType;
+      const resumeInfo = await axios.get<{data: ResumeType}>(
+        "http://localhost:3000/api/resume/" + id
+      );
+      if (!resumeInfo) return;
 
-      setResume(resumeInfo);
+      console.log(resumeInfo.data.data)
+
+      setResume(resumeInfo.data.data);
     } catch (error) {
+      console.log(error);
       toast.error("something went wrong fetching resume data");
     } finally {
       dispatch(resetLoaderState());
     }
   };
 
-  // useEffect(() => {
-  //   fetchResumeData();
-  // }, []);
+  useEffect(() => {
+    if (id) {
+      fetchResumeData();
+    }
+  }, [id]);
 
   return (
     <Layout>
@@ -74,4 +82,3 @@ const Resume = () => {
 };
 
 export default Resume;
-

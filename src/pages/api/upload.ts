@@ -10,7 +10,7 @@ import {
 } from "@/business/ResumeUploadHandler";
 
 type SuccessResponse = ResumeUploadModel;
-type ErrorResponse = { error: string };
+export type ErrorResponse = { error: string };
 
 async function uploadFileHandler(
   req: AuthenticatedRequest,
@@ -22,7 +22,7 @@ async function uploadFileHandler(
   const data = await resumeUploadHandler(uploadData, userEmail);
 
   // Return success response
-  return res.status(200).json({
+  return res.status(201).json({
     ...data,
   });
 }
