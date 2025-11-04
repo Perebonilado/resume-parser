@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Resume = $Result.DefaultSelection<Prisma.$ResumePayload>
+/**
+ * Model ResumeHistory
+ * 
+ */
+export type ResumeHistory = $Result.DefaultSelection<Prisma.$ResumeHistoryPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -161,6 +166,16 @@ export class PrismaClient<
     * ```
     */
   get resume(): Prisma.ResumeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.resumeHistory`: Exposes CRUD operations for the **ResumeHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ResumeHistories
+    * const resumeHistories = await prisma.resumeHistory.findMany()
+    * ```
+    */
+  get resumeHistory(): Prisma.ResumeHistoryDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -603,7 +618,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Resume: 'Resume'
+    Resume: 'Resume',
+    ResumeHistory: 'ResumeHistory'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -622,7 +638,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "resume"
+      modelProps: "user" | "resume" | "resumeHistory"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -774,6 +790,80 @@ export namespace Prisma {
           }
         }
       }
+      ResumeHistory: {
+        payload: Prisma.$ResumeHistoryPayload<ExtArgs>
+        fields: Prisma.ResumeHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ResumeHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ResumeHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.ResumeHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ResumeHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.ResumeHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.ResumeHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.ResumeHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ResumeHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.ResumeHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>
+          }
+          update: {
+            args: Prisma.ResumeHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.ResumeHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ResumeHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ResumeHistoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.ResumeHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumeHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.ResumeHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateResumeHistory>
+          }
+          groupBy: {
+            args: Prisma.ResumeHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ResumeHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ResumeHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<ResumeHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -872,6 +962,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     resume?: ResumeOmit
+    resumeHistory?: ResumeHistoryOmit
   }
 
   /* Types for Logging */
@@ -952,11 +1043,13 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    resume: number
+    resumes: number
+    resumeHistory: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    resume?: boolean | UserCountOutputTypeCountResumeArgs
+    resumes?: boolean | UserCountOutputTypeCountResumesArgs
+    resumeHistory?: boolean | UserCountOutputTypeCountResumeHistoryArgs
   }
 
   // Custom InputTypes
@@ -973,8 +1066,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountResumeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountResumesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResumeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountResumeHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResumeHistoryWhereInput
   }
 
 
@@ -1172,7 +1272,8 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     createdAt?: boolean
-    resume?: boolean | User$resumeArgs<ExtArgs>
+    resumes?: boolean | User$resumesArgs<ExtArgs>
+    resumeHistory?: boolean | User$resumeHistoryArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1199,7 +1300,8 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    resume?: boolean | User$resumeArgs<ExtArgs>
+    resumes?: boolean | User$resumesArgs<ExtArgs>
+    resumeHistory?: boolean | User$resumeHistoryArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1208,7 +1310,8 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      resume: Prisma.$ResumePayload<ExtArgs>[]
+      resumes: Prisma.$ResumePayload<ExtArgs>[]
+      resumeHistory: Prisma.$ResumeHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1609,7 +1712,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    resume<T extends User$resumeArgs<ExtArgs> = {}>(args?: Subset<T, User$resumeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resumes<T extends User$resumesArgs<ExtArgs> = {}>(args?: Subset<T, User$resumesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resumeHistory<T extends User$resumeHistoryArgs<ExtArgs> = {}>(args?: Subset<T, User$resumeHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2031,9 +2135,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.resume
+   * User.resumes
    */
-  export type User$resumeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$resumesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Resume
      */
@@ -2052,6 +2156,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ResumeScalarFieldEnum | ResumeScalarFieldEnum[]
+  }
+
+  /**
+   * User.resumeHistory
+   */
+  export type User$resumeHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    where?: ResumeHistoryWhereInput
+    orderBy?: ResumeHistoryOrderByWithRelationInput | ResumeHistoryOrderByWithRelationInput[]
+    cursor?: ResumeHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResumeHistoryScalarFieldEnum | ResumeHistoryScalarFieldEnum[]
   }
 
   /**
@@ -2086,33 +2214,33 @@ export namespace Prisma {
   }
 
   export type ResumeAvgAggregateOutputType = {
+    id: number | null
     userId: number | null
     fileSize: number | null
   }
 
   export type ResumeSumAggregateOutputType = {
+    id: number | null
     userId: number | null
     fileSize: number | null
   }
 
   export type ResumeMinAggregateOutputType = {
-    id: string | null
+    id: number | null
     userId: number | null
     fileName: string | null
     fileSize: number | null
     fileUrl: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    uploadedAt: Date | null
   }
 
   export type ResumeMaxAggregateOutputType = {
-    id: string | null
+    id: number | null
     userId: number | null
     fileName: string | null
     fileSize: number | null
     fileUrl: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    uploadedAt: Date | null
   }
 
   export type ResumeCountAggregateOutputType = {
@@ -2121,18 +2249,20 @@ export namespace Prisma {
     fileName: number
     fileSize: number
     fileUrl: number
-    createdAt: number
-    updatedAt: number
+    resumeData: number
+    uploadedAt: number
     _all: number
   }
 
 
   export type ResumeAvgAggregateInputType = {
+    id?: true
     userId?: true
     fileSize?: true
   }
 
   export type ResumeSumAggregateInputType = {
+    id?: true
     userId?: true
     fileSize?: true
   }
@@ -2143,8 +2273,7 @@ export namespace Prisma {
     fileName?: true
     fileSize?: true
     fileUrl?: true
-    createdAt?: true
-    updatedAt?: true
+    uploadedAt?: true
   }
 
   export type ResumeMaxAggregateInputType = {
@@ -2153,8 +2282,7 @@ export namespace Prisma {
     fileName?: true
     fileSize?: true
     fileUrl?: true
-    createdAt?: true
-    updatedAt?: true
+    uploadedAt?: true
   }
 
   export type ResumeCountAggregateInputType = {
@@ -2163,8 +2291,8 @@ export namespace Prisma {
     fileName?: true
     fileSize?: true
     fileUrl?: true
-    createdAt?: true
-    updatedAt?: true
+    resumeData?: true
+    uploadedAt?: true
     _all?: true
   }
 
@@ -2255,13 +2383,13 @@ export namespace Prisma {
   }
 
   export type ResumeGroupByOutputType = {
-    id: string
+    id: number
     userId: number
     fileName: string
     fileSize: number
     fileUrl: string
-    createdAt: Date
-    updatedAt: Date
+    resumeData: JsonValue
+    uploadedAt: Date
     _count: ResumeCountAggregateOutputType | null
     _avg: ResumeAvgAggregateOutputType | null
     _sum: ResumeSumAggregateOutputType | null
@@ -2289,9 +2417,10 @@ export namespace Prisma {
     fileName?: boolean
     fileSize?: boolean
     fileUrl?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    resumeData?: boolean
+    uploadedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    history?: boolean | Resume$historyArgs<ExtArgs>
   }, ExtArgs["result"]["resume"]>
 
   export type ResumeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2300,8 +2429,8 @@ export namespace Prisma {
     fileName?: boolean
     fileSize?: boolean
     fileUrl?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    resumeData?: boolean
+    uploadedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resume"]>
 
@@ -2311,8 +2440,8 @@ export namespace Prisma {
     fileName?: boolean
     fileSize?: boolean
     fileUrl?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    resumeData?: boolean
+    uploadedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resume"]>
 
@@ -2322,13 +2451,14 @@ export namespace Prisma {
     fileName?: boolean
     fileSize?: boolean
     fileUrl?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    resumeData?: boolean
+    uploadedAt?: boolean
   }
 
-  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fileName" | "fileSize" | "fileUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["resume"]>
+  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fileName" | "fileSize" | "fileUrl" | "resumeData" | "uploadedAt", ExtArgs["result"]["resume"]>
   export type ResumeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    history?: boolean | Resume$historyArgs<ExtArgs>
   }
   export type ResumeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2341,15 +2471,16 @@ export namespace Prisma {
     name: "Resume"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      history: Prisma.$ResumeHistoryPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
+      id: number
       userId: number
       fileName: string
       fileSize: number
       fileUrl: string
-      createdAt: Date
-      updatedAt: Date
+      resumeData: Prisma.JsonValue
+      uploadedAt: Date
     }, ExtArgs["result"]["resume"]>
     composites: {}
   }
@@ -2745,6 +2876,7 @@ export namespace Prisma {
   export interface Prisma__ResumeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    history<T extends Resume$historyArgs<ExtArgs> = {}>(args?: Subset<T, Resume$historyArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2774,13 +2906,13 @@ export namespace Prisma {
    * Fields of the Resume model
    */
   interface ResumeFieldRefs {
-    readonly id: FieldRef<"Resume", 'String'>
+    readonly id: FieldRef<"Resume", 'Int'>
     readonly userId: FieldRef<"Resume", 'Int'>
     readonly fileName: FieldRef<"Resume", 'String'>
     readonly fileSize: FieldRef<"Resume", 'Int'>
     readonly fileUrl: FieldRef<"Resume", 'String'>
-    readonly createdAt: FieldRef<"Resume", 'DateTime'>
-    readonly updatedAt: FieldRef<"Resume", 'DateTime'>
+    readonly resumeData: FieldRef<"Resume", 'Json'>
+    readonly uploadedAt: FieldRef<"Resume", 'DateTime'>
   }
     
 
@@ -3177,6 +3309,25 @@ export namespace Prisma {
   }
 
   /**
+   * Resume.history
+   */
+  export type Resume$historyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    where?: ResumeHistoryWhereInput
+  }
+
+  /**
    * Resume without action
    */
   export type ResumeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3192,6 +3343,1101 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ResumeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ResumeHistory
+   */
+
+  export type AggregateResumeHistory = {
+    _count: ResumeHistoryCountAggregateOutputType | null
+    _avg: ResumeHistoryAvgAggregateOutputType | null
+    _sum: ResumeHistorySumAggregateOutputType | null
+    _min: ResumeHistoryMinAggregateOutputType | null
+    _max: ResumeHistoryMaxAggregateOutputType | null
+  }
+
+  export type ResumeHistoryAvgAggregateOutputType = {
+    id: number | null
+    resumeId: number | null
+    userId: number | null
+  }
+
+  export type ResumeHistorySumAggregateOutputType = {
+    id: number | null
+    resumeId: number | null
+    userId: number | null
+  }
+
+  export type ResumeHistoryMinAggregateOutputType = {
+    id: number | null
+    resumeId: number | null
+    userId: number | null
+    createdAt: Date | null
+  }
+
+  export type ResumeHistoryMaxAggregateOutputType = {
+    id: number | null
+    resumeId: number | null
+    userId: number | null
+    createdAt: Date | null
+  }
+
+  export type ResumeHistoryCountAggregateOutputType = {
+    id: number
+    resumeId: number
+    userId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ResumeHistoryAvgAggregateInputType = {
+    id?: true
+    resumeId?: true
+    userId?: true
+  }
+
+  export type ResumeHistorySumAggregateInputType = {
+    id?: true
+    resumeId?: true
+    userId?: true
+  }
+
+  export type ResumeHistoryMinAggregateInputType = {
+    id?: true
+    resumeId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type ResumeHistoryMaxAggregateInputType = {
+    id?: true
+    resumeId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type ResumeHistoryCountAggregateInputType = {
+    id?: true
+    resumeId?: true
+    userId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ResumeHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ResumeHistory to aggregate.
+     */
+    where?: ResumeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResumeHistories to fetch.
+     */
+    orderBy?: ResumeHistoryOrderByWithRelationInput | ResumeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ResumeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResumeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResumeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ResumeHistories
+    **/
+    _count?: true | ResumeHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ResumeHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ResumeHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ResumeHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ResumeHistoryMaxAggregateInputType
+  }
+
+  export type GetResumeHistoryAggregateType<T extends ResumeHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateResumeHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateResumeHistory[P]>
+      : GetScalarType<T[P], AggregateResumeHistory[P]>
+  }
+
+
+
+
+  export type ResumeHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResumeHistoryWhereInput
+    orderBy?: ResumeHistoryOrderByWithAggregationInput | ResumeHistoryOrderByWithAggregationInput[]
+    by: ResumeHistoryScalarFieldEnum[] | ResumeHistoryScalarFieldEnum
+    having?: ResumeHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ResumeHistoryCountAggregateInputType | true
+    _avg?: ResumeHistoryAvgAggregateInputType
+    _sum?: ResumeHistorySumAggregateInputType
+    _min?: ResumeHistoryMinAggregateInputType
+    _max?: ResumeHistoryMaxAggregateInputType
+  }
+
+  export type ResumeHistoryGroupByOutputType = {
+    id: number
+    resumeId: number
+    userId: number
+    createdAt: Date
+    _count: ResumeHistoryCountAggregateOutputType | null
+    _avg: ResumeHistoryAvgAggregateOutputType | null
+    _sum: ResumeHistorySumAggregateOutputType | null
+    _min: ResumeHistoryMinAggregateOutputType | null
+    _max: ResumeHistoryMaxAggregateOutputType | null
+  }
+
+  type GetResumeHistoryGroupByPayload<T extends ResumeHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ResumeHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ResumeHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ResumeHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], ResumeHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ResumeHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    resumeId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    resume?: boolean | ResumeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resumeHistory"]>
+
+  export type ResumeHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    resumeId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    resume?: boolean | ResumeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resumeHistory"]>
+
+  export type ResumeHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    resumeId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    resume?: boolean | ResumeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resumeHistory"]>
+
+  export type ResumeHistorySelectScalar = {
+    id?: boolean
+    resumeId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }
+
+  export type ResumeHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "resumeId" | "userId" | "createdAt", ExtArgs["result"]["resumeHistory"]>
+  export type ResumeHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    resume?: boolean | ResumeDefaultArgs<ExtArgs>
+  }
+  export type ResumeHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    resume?: boolean | ResumeDefaultArgs<ExtArgs>
+  }
+  export type ResumeHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    resume?: boolean | ResumeDefaultArgs<ExtArgs>
+  }
+
+  export type $ResumeHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ResumeHistory"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      resume: Prisma.$ResumePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      resumeId: number
+      userId: number
+      createdAt: Date
+    }, ExtArgs["result"]["resumeHistory"]>
+    composites: {}
+  }
+
+  type ResumeHistoryGetPayload<S extends boolean | null | undefined | ResumeHistoryDefaultArgs> = $Result.GetResult<Prisma.$ResumeHistoryPayload, S>
+
+  type ResumeHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ResumeHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ResumeHistoryCountAggregateInputType | true
+    }
+
+  export interface ResumeHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ResumeHistory'], meta: { name: 'ResumeHistory' } }
+    /**
+     * Find zero or one ResumeHistory that matches the filter.
+     * @param {ResumeHistoryFindUniqueArgs} args - Arguments to find a ResumeHistory
+     * @example
+     * // Get one ResumeHistory
+     * const resumeHistory = await prisma.resumeHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ResumeHistoryFindUniqueArgs>(args: SelectSubset<T, ResumeHistoryFindUniqueArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ResumeHistory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ResumeHistoryFindUniqueOrThrowArgs} args - Arguments to find a ResumeHistory
+     * @example
+     * // Get one ResumeHistory
+     * const resumeHistory = await prisma.resumeHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ResumeHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, ResumeHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ResumeHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeHistoryFindFirstArgs} args - Arguments to find a ResumeHistory
+     * @example
+     * // Get one ResumeHistory
+     * const resumeHistory = await prisma.resumeHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ResumeHistoryFindFirstArgs>(args?: SelectSubset<T, ResumeHistoryFindFirstArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ResumeHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeHistoryFindFirstOrThrowArgs} args - Arguments to find a ResumeHistory
+     * @example
+     * // Get one ResumeHistory
+     * const resumeHistory = await prisma.resumeHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ResumeHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, ResumeHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ResumeHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ResumeHistories
+     * const resumeHistories = await prisma.resumeHistory.findMany()
+     * 
+     * // Get first 10 ResumeHistories
+     * const resumeHistories = await prisma.resumeHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const resumeHistoryWithIdOnly = await prisma.resumeHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ResumeHistoryFindManyArgs>(args?: SelectSubset<T, ResumeHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ResumeHistory.
+     * @param {ResumeHistoryCreateArgs} args - Arguments to create a ResumeHistory.
+     * @example
+     * // Create one ResumeHistory
+     * const ResumeHistory = await prisma.resumeHistory.create({
+     *   data: {
+     *     // ... data to create a ResumeHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends ResumeHistoryCreateArgs>(args: SelectSubset<T, ResumeHistoryCreateArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ResumeHistories.
+     * @param {ResumeHistoryCreateManyArgs} args - Arguments to create many ResumeHistories.
+     * @example
+     * // Create many ResumeHistories
+     * const resumeHistory = await prisma.resumeHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ResumeHistoryCreateManyArgs>(args?: SelectSubset<T, ResumeHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ResumeHistories and returns the data saved in the database.
+     * @param {ResumeHistoryCreateManyAndReturnArgs} args - Arguments to create many ResumeHistories.
+     * @example
+     * // Create many ResumeHistories
+     * const resumeHistory = await prisma.resumeHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ResumeHistories and only return the `id`
+     * const resumeHistoryWithIdOnly = await prisma.resumeHistory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ResumeHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, ResumeHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ResumeHistory.
+     * @param {ResumeHistoryDeleteArgs} args - Arguments to delete one ResumeHistory.
+     * @example
+     * // Delete one ResumeHistory
+     * const ResumeHistory = await prisma.resumeHistory.delete({
+     *   where: {
+     *     // ... filter to delete one ResumeHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ResumeHistoryDeleteArgs>(args: SelectSubset<T, ResumeHistoryDeleteArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ResumeHistory.
+     * @param {ResumeHistoryUpdateArgs} args - Arguments to update one ResumeHistory.
+     * @example
+     * // Update one ResumeHistory
+     * const resumeHistory = await prisma.resumeHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ResumeHistoryUpdateArgs>(args: SelectSubset<T, ResumeHistoryUpdateArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ResumeHistories.
+     * @param {ResumeHistoryDeleteManyArgs} args - Arguments to filter ResumeHistories to delete.
+     * @example
+     * // Delete a few ResumeHistories
+     * const { count } = await prisma.resumeHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ResumeHistoryDeleteManyArgs>(args?: SelectSubset<T, ResumeHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ResumeHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ResumeHistories
+     * const resumeHistory = await prisma.resumeHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ResumeHistoryUpdateManyArgs>(args: SelectSubset<T, ResumeHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ResumeHistories and returns the data updated in the database.
+     * @param {ResumeHistoryUpdateManyAndReturnArgs} args - Arguments to update many ResumeHistories.
+     * @example
+     * // Update many ResumeHistories
+     * const resumeHistory = await prisma.resumeHistory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ResumeHistories and only return the `id`
+     * const resumeHistoryWithIdOnly = await prisma.resumeHistory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ResumeHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, ResumeHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ResumeHistory.
+     * @param {ResumeHistoryUpsertArgs} args - Arguments to update or create a ResumeHistory.
+     * @example
+     * // Update or create a ResumeHistory
+     * const resumeHistory = await prisma.resumeHistory.upsert({
+     *   create: {
+     *     // ... data to create a ResumeHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ResumeHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ResumeHistoryUpsertArgs>(args: SelectSubset<T, ResumeHistoryUpsertArgs<ExtArgs>>): Prisma__ResumeHistoryClient<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ResumeHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeHistoryCountArgs} args - Arguments to filter ResumeHistories to count.
+     * @example
+     * // Count the number of ResumeHistories
+     * const count = await prisma.resumeHistory.count({
+     *   where: {
+     *     // ... the filter for the ResumeHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends ResumeHistoryCountArgs>(
+      args?: Subset<T, ResumeHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ResumeHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ResumeHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ResumeHistoryAggregateArgs>(args: Subset<T, ResumeHistoryAggregateArgs>): Prisma.PrismaPromise<GetResumeHistoryAggregateType<T>>
+
+    /**
+     * Group by ResumeHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ResumeHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ResumeHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: ResumeHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ResumeHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResumeHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ResumeHistory model
+   */
+  readonly fields: ResumeHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ResumeHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ResumeHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    resume<T extends ResumeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ResumeDefaultArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ResumeHistory model
+   */
+  interface ResumeHistoryFieldRefs {
+    readonly id: FieldRef<"ResumeHistory", 'Int'>
+    readonly resumeId: FieldRef<"ResumeHistory", 'Int'>
+    readonly userId: FieldRef<"ResumeHistory", 'Int'>
+    readonly createdAt: FieldRef<"ResumeHistory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ResumeHistory findUnique
+   */
+  export type ResumeHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ResumeHistory to fetch.
+     */
+    where: ResumeHistoryWhereUniqueInput
+  }
+
+  /**
+   * ResumeHistory findUniqueOrThrow
+   */
+  export type ResumeHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ResumeHistory to fetch.
+     */
+    where: ResumeHistoryWhereUniqueInput
+  }
+
+  /**
+   * ResumeHistory findFirst
+   */
+  export type ResumeHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ResumeHistory to fetch.
+     */
+    where?: ResumeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResumeHistories to fetch.
+     */
+    orderBy?: ResumeHistoryOrderByWithRelationInput | ResumeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ResumeHistories.
+     */
+    cursor?: ResumeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResumeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResumeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ResumeHistories.
+     */
+    distinct?: ResumeHistoryScalarFieldEnum | ResumeHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ResumeHistory findFirstOrThrow
+   */
+  export type ResumeHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ResumeHistory to fetch.
+     */
+    where?: ResumeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResumeHistories to fetch.
+     */
+    orderBy?: ResumeHistoryOrderByWithRelationInput | ResumeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ResumeHistories.
+     */
+    cursor?: ResumeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResumeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResumeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ResumeHistories.
+     */
+    distinct?: ResumeHistoryScalarFieldEnum | ResumeHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ResumeHistory findMany
+   */
+  export type ResumeHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ResumeHistories to fetch.
+     */
+    where?: ResumeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResumeHistories to fetch.
+     */
+    orderBy?: ResumeHistoryOrderByWithRelationInput | ResumeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ResumeHistories.
+     */
+    cursor?: ResumeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResumeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResumeHistories.
+     */
+    skip?: number
+    distinct?: ResumeHistoryScalarFieldEnum | ResumeHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ResumeHistory create
+   */
+  export type ResumeHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ResumeHistory.
+     */
+    data: XOR<ResumeHistoryCreateInput, ResumeHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * ResumeHistory createMany
+   */
+  export type ResumeHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ResumeHistories.
+     */
+    data: ResumeHistoryCreateManyInput | ResumeHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ResumeHistory createManyAndReturn
+   */
+  export type ResumeHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many ResumeHistories.
+     */
+    data: ResumeHistoryCreateManyInput | ResumeHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ResumeHistory update
+   */
+  export type ResumeHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ResumeHistory.
+     */
+    data: XOR<ResumeHistoryUpdateInput, ResumeHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which ResumeHistory to update.
+     */
+    where: ResumeHistoryWhereUniqueInput
+  }
+
+  /**
+   * ResumeHistory updateMany
+   */
+  export type ResumeHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ResumeHistories.
+     */
+    data: XOR<ResumeHistoryUpdateManyMutationInput, ResumeHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which ResumeHistories to update
+     */
+    where?: ResumeHistoryWhereInput
+    /**
+     * Limit how many ResumeHistories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResumeHistory updateManyAndReturn
+   */
+  export type ResumeHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to update ResumeHistories.
+     */
+    data: XOR<ResumeHistoryUpdateManyMutationInput, ResumeHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which ResumeHistories to update
+     */
+    where?: ResumeHistoryWhereInput
+    /**
+     * Limit how many ResumeHistories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ResumeHistory upsert
+   */
+  export type ResumeHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ResumeHistory to update in case it exists.
+     */
+    where: ResumeHistoryWhereUniqueInput
+    /**
+     * In case the ResumeHistory found by the `where` argument doesn't exist, create a new ResumeHistory with this data.
+     */
+    create: XOR<ResumeHistoryCreateInput, ResumeHistoryUncheckedCreateInput>
+    /**
+     * In case the ResumeHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ResumeHistoryUpdateInput, ResumeHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * ResumeHistory delete
+   */
+  export type ResumeHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which ResumeHistory to delete.
+     */
+    where: ResumeHistoryWhereUniqueInput
+  }
+
+  /**
+   * ResumeHistory deleteMany
+   */
+  export type ResumeHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ResumeHistories to delete
+     */
+    where?: ResumeHistoryWhereInput
+    /**
+     * Limit how many ResumeHistories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResumeHistory without action
+   */
+  export type ResumeHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeHistory
+     */
+    select?: ResumeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResumeHistory
+     */
+    omit?: ResumeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeHistoryInclude<ExtArgs> | null
   }
 
 
@@ -3225,11 +4471,21 @@ export namespace Prisma {
     fileName: 'fileName',
     fileSize: 'fileSize',
     fileUrl: 'fileUrl',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    resumeData: 'resumeData',
+    uploadedAt: 'uploadedAt'
   };
 
   export type ResumeScalarFieldEnum = (typeof ResumeScalarFieldEnum)[keyof typeof ResumeScalarFieldEnum]
+
+
+  export const ResumeHistoryScalarFieldEnum: {
+    id: 'id',
+    resumeId: 'resumeId',
+    userId: 'userId',
+    createdAt: 'createdAt'
+  };
+
+  export type ResumeHistoryScalarFieldEnum = (typeof ResumeHistoryScalarFieldEnum)[keyof typeof ResumeHistoryScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3238,6 +4494,13 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -3254,6 +4517,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -3304,6 +4576,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3328,7 +4614,8 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
-    resume?: ResumeListRelationFilter
+    resumes?: ResumeListRelationFilter
+    resumeHistory?: ResumeHistoryListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3336,7 +4623,8 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    resume?: ResumeOrderByRelationAggregateInput
+    resumes?: ResumeOrderByRelationAggregateInput
+    resumeHistory?: ResumeHistoryOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3347,7 +4635,8 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
-    resume?: ResumeListRelationFilter
+    resumes?: ResumeListRelationFilter
+    resumeHistory?: ResumeHistoryListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3376,14 +4665,15 @@ export namespace Prisma {
     AND?: ResumeWhereInput | ResumeWhereInput[]
     OR?: ResumeWhereInput[]
     NOT?: ResumeWhereInput | ResumeWhereInput[]
-    id?: StringFilter<"Resume"> | string
+    id?: IntFilter<"Resume"> | number
     userId?: IntFilter<"Resume"> | number
     fileName?: StringFilter<"Resume"> | string
     fileSize?: IntFilter<"Resume"> | number
     fileUrl?: StringFilter<"Resume"> | string
-    createdAt?: DateTimeFilter<"Resume"> | Date | string
-    updatedAt?: DateTimeFilter<"Resume"> | Date | string
+    resumeData?: JsonFilter<"Resume">
+    uploadedAt?: DateTimeFilter<"Resume"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    history?: XOR<ResumeHistoryNullableScalarRelationFilter, ResumeHistoryWhereInput> | null
   }
 
   export type ResumeOrderByWithRelationInput = {
@@ -3392,13 +4682,14 @@ export namespace Prisma {
     fileName?: SortOrder
     fileSize?: SortOrder
     fileUrl?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    resumeData?: SortOrder
+    uploadedAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    history?: ResumeHistoryOrderByWithRelationInput
   }
 
   export type ResumeWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     userId?: number
     AND?: ResumeWhereInput | ResumeWhereInput[]
     OR?: ResumeWhereInput[]
@@ -3406,9 +4697,10 @@ export namespace Prisma {
     fileName?: StringFilter<"Resume"> | string
     fileSize?: IntFilter<"Resume"> | number
     fileUrl?: StringFilter<"Resume"> | string
-    createdAt?: DateTimeFilter<"Resume"> | Date | string
-    updatedAt?: DateTimeFilter<"Resume"> | Date | string
+    resumeData?: JsonFilter<"Resume">
+    uploadedAt?: DateTimeFilter<"Resume"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    history?: XOR<ResumeHistoryNullableScalarRelationFilter, ResumeHistoryWhereInput> | null
   }, "id" | "userId">
 
   export type ResumeOrderByWithAggregationInput = {
@@ -3417,8 +4709,8 @@ export namespace Prisma {
     fileName?: SortOrder
     fileSize?: SortOrder
     fileUrl?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    resumeData?: SortOrder
+    uploadedAt?: SortOrder
     _count?: ResumeCountOrderByAggregateInput
     _avg?: ResumeAvgOrderByAggregateInput
     _max?: ResumeMaxOrderByAggregateInput
@@ -3430,20 +4722,76 @@ export namespace Prisma {
     AND?: ResumeScalarWhereWithAggregatesInput | ResumeScalarWhereWithAggregatesInput[]
     OR?: ResumeScalarWhereWithAggregatesInput[]
     NOT?: ResumeScalarWhereWithAggregatesInput | ResumeScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Resume"> | string
+    id?: IntWithAggregatesFilter<"Resume"> | number
     userId?: IntWithAggregatesFilter<"Resume"> | number
     fileName?: StringWithAggregatesFilter<"Resume"> | string
     fileSize?: IntWithAggregatesFilter<"Resume"> | number
     fileUrl?: StringWithAggregatesFilter<"Resume"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Resume"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Resume"> | Date | string
+    resumeData?: JsonWithAggregatesFilter<"Resume">
+    uploadedAt?: DateTimeWithAggregatesFilter<"Resume"> | Date | string
+  }
+
+  export type ResumeHistoryWhereInput = {
+    AND?: ResumeHistoryWhereInput | ResumeHistoryWhereInput[]
+    OR?: ResumeHistoryWhereInput[]
+    NOT?: ResumeHistoryWhereInput | ResumeHistoryWhereInput[]
+    id?: IntFilter<"ResumeHistory"> | number
+    resumeId?: IntFilter<"ResumeHistory"> | number
+    userId?: IntFilter<"ResumeHistory"> | number
+    createdAt?: DateTimeFilter<"ResumeHistory"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    resume?: XOR<ResumeScalarRelationFilter, ResumeWhereInput>
+  }
+
+  export type ResumeHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    resumeId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    resume?: ResumeOrderByWithRelationInput
+  }
+
+  export type ResumeHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    resumeId?: number
+    AND?: ResumeHistoryWhereInput | ResumeHistoryWhereInput[]
+    OR?: ResumeHistoryWhereInput[]
+    NOT?: ResumeHistoryWhereInput | ResumeHistoryWhereInput[]
+    userId?: IntFilter<"ResumeHistory"> | number
+    createdAt?: DateTimeFilter<"ResumeHistory"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    resume?: XOR<ResumeScalarRelationFilter, ResumeWhereInput>
+  }, "id" | "resumeId">
+
+  export type ResumeHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    resumeId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    _count?: ResumeHistoryCountOrderByAggregateInput
+    _avg?: ResumeHistoryAvgOrderByAggregateInput
+    _max?: ResumeHistoryMaxOrderByAggregateInput
+    _min?: ResumeHistoryMinOrderByAggregateInput
+    _sum?: ResumeHistorySumOrderByAggregateInput
+  }
+
+  export type ResumeHistoryScalarWhereWithAggregatesInput = {
+    AND?: ResumeHistoryScalarWhereWithAggregatesInput | ResumeHistoryScalarWhereWithAggregatesInput[]
+    OR?: ResumeHistoryScalarWhereWithAggregatesInput[]
+    NOT?: ResumeHistoryScalarWhereWithAggregatesInput | ResumeHistoryScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ResumeHistory"> | number
+    resumeId?: IntWithAggregatesFilter<"ResumeHistory"> | number
+    userId?: IntWithAggregatesFilter<"ResumeHistory"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"ResumeHistory"> | Date | string
   }
 
   export type UserCreateInput = {
     email: string
     name?: string | null
     createdAt?: Date | string
-    resume?: ResumeCreateNestedManyWithoutUserInput
+    resumes?: ResumeCreateNestedManyWithoutUserInput
+    resumeHistory?: ResumeHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3451,14 +4799,16 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
-    resume?: ResumeUncheckedCreateNestedManyWithoutUserInput
+    resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
+    resumeHistory?: ResumeHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    resume?: ResumeUpdateManyWithoutUserNestedInput
+    resumes?: ResumeUpdateManyWithoutUserNestedInput
+    resumeHistory?: ResumeHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3466,7 +4816,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    resume?: ResumeUncheckedUpdateManyWithoutUserNestedInput
+    resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
+    resumeHistory?: ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3490,72 +4841,117 @@ export namespace Prisma {
   }
 
   export type ResumeCreateInput = {
-    id?: string
     fileName: string
     fileSize: number
     fileUrl: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutResumeInput
+    resumeData: JsonNullValueInput | InputJsonValue
+    uploadedAt?: Date | string
+    user: UserCreateNestedOneWithoutResumesInput
+    history?: ResumeHistoryCreateNestedOneWithoutResumeInput
   }
 
   export type ResumeUncheckedCreateInput = {
-    id?: string
+    id?: number
     userId: number
     fileName: string
     fileSize: number
     fileUrl: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    resumeData: JsonNullValueInput | InputJsonValue
+    uploadedAt?: Date | string
+    history?: ResumeHistoryUncheckedCreateNestedOneWithoutResumeInput
   }
 
   export type ResumeUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     fileName?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     fileUrl?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutResumeNestedInput
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutResumesNestedInput
+    history?: ResumeHistoryUpdateOneWithoutResumeNestedInput
   }
 
   export type ResumeUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     fileName?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     fileUrl?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    history?: ResumeHistoryUncheckedUpdateOneWithoutResumeNestedInput
   }
 
   export type ResumeCreateManyInput = {
-    id?: string
+    id?: number
     userId: number
     fileName: string
     fileSize: number
     fileUrl: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    resumeData: JsonNullValueInput | InputJsonValue
+    uploadedAt?: Date | string
   }
 
   export type ResumeUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     fileName?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     fileUrl?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ResumeUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     fileName?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     fileUrl?: StringFieldUpdateOperationsInput | string
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResumeHistoryCreateInput = {
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutResumeHistoryInput
+    resume: ResumeCreateNestedOneWithoutHistoryInput
+  }
+
+  export type ResumeHistoryUncheckedCreateInput = {
+    id?: number
+    resumeId: number
+    userId: number
+    createdAt?: Date | string
+  }
+
+  export type ResumeHistoryUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutResumeHistoryNestedInput
+    resume?: ResumeUpdateOneRequiredWithoutHistoryNestedInput
+  }
+
+  export type ResumeHistoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    resumeId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResumeHistoryCreateManyInput = {
+    id?: number
+    resumeId: number
+    userId: number
+    createdAt?: Date | string
+  }
+
+  export type ResumeHistoryUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResumeHistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    resumeId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3616,12 +5012,22 @@ export namespace Prisma {
     none?: ResumeWhereInput
   }
 
+  export type ResumeHistoryListRelationFilter = {
+    every?: ResumeHistoryWhereInput
+    some?: ResumeHistoryWhereInput
+    none?: ResumeHistoryWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type ResumeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ResumeHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3719,10 +5125,38 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type ResumeHistoryNullableScalarRelationFilter = {
+    is?: ResumeHistoryWhereInput | null
+    isNot?: ResumeHistoryWhereInput | null
   }
 
   export type ResumeCountOrderByAggregateInput = {
@@ -3731,11 +5165,12 @@ export namespace Prisma {
     fileName?: SortOrder
     fileSize?: SortOrder
     fileUrl?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    resumeData?: SortOrder
+    uploadedAt?: SortOrder
   }
 
   export type ResumeAvgOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     fileSize?: SortOrder
   }
@@ -3746,8 +5181,7 @@ export namespace Prisma {
     fileName?: SortOrder
     fileSize?: SortOrder
     fileUrl?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    uploadedAt?: SortOrder
   }
 
   export type ResumeMinOrderByAggregateInput = {
@@ -3756,13 +5190,77 @@ export namespace Prisma {
     fileName?: SortOrder
     fileSize?: SortOrder
     fileUrl?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    uploadedAt?: SortOrder
   }
 
   export type ResumeSumOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     fileSize?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type ResumeScalarRelationFilter = {
+    is?: ResumeWhereInput
+    isNot?: ResumeWhereInput
+  }
+
+  export type ResumeHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    resumeId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ResumeHistoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    resumeId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ResumeHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    resumeId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ResumeHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    resumeId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ResumeHistorySumOrderByAggregateInput = {
+    id?: SortOrder
+    resumeId?: SortOrder
+    userId?: SortOrder
   }
 
   export type ResumeCreateNestedManyWithoutUserInput = {
@@ -3772,11 +5270,25 @@ export namespace Prisma {
     connect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
   }
 
+  export type ResumeHistoryCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResumeHistoryCreateWithoutUserInput, ResumeHistoryUncheckedCreateWithoutUserInput> | ResumeHistoryCreateWithoutUserInput[] | ResumeHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResumeHistoryCreateOrConnectWithoutUserInput | ResumeHistoryCreateOrConnectWithoutUserInput[]
+    createMany?: ResumeHistoryCreateManyUserInputEnvelope
+    connect?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+  }
+
   export type ResumeUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ResumeCreateWithoutUserInput, ResumeUncheckedCreateWithoutUserInput> | ResumeCreateWithoutUserInput[] | ResumeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ResumeCreateOrConnectWithoutUserInput | ResumeCreateOrConnectWithoutUserInput[]
     createMany?: ResumeCreateManyUserInputEnvelope
     connect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+  }
+
+  export type ResumeHistoryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResumeHistoryCreateWithoutUserInput, ResumeHistoryUncheckedCreateWithoutUserInput> | ResumeHistoryCreateWithoutUserInput[] | ResumeHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResumeHistoryCreateOrConnectWithoutUserInput | ResumeHistoryCreateOrConnectWithoutUserInput[]
+    createMany?: ResumeHistoryCreateManyUserInputEnvelope
+    connect?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3805,6 +5317,20 @@ export namespace Prisma {
     deleteMany?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
   }
 
+  export type ResumeHistoryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResumeHistoryCreateWithoutUserInput, ResumeHistoryUncheckedCreateWithoutUserInput> | ResumeHistoryCreateWithoutUserInput[] | ResumeHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResumeHistoryCreateOrConnectWithoutUserInput | ResumeHistoryCreateOrConnectWithoutUserInput[]
+    upsert?: ResumeHistoryUpsertWithWhereUniqueWithoutUserInput | ResumeHistoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResumeHistoryCreateManyUserInputEnvelope
+    set?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+    disconnect?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+    delete?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+    connect?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+    update?: ResumeHistoryUpdateWithWhereUniqueWithoutUserInput | ResumeHistoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResumeHistoryUpdateManyWithWhereWithoutUserInput | ResumeHistoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResumeHistoryScalarWhereInput | ResumeHistoryScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -3827,18 +5353,92 @@ export namespace Prisma {
     deleteMany?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutResumeInput = {
-    create?: XOR<UserCreateWithoutResumeInput, UserUncheckedCreateWithoutResumeInput>
-    connectOrCreate?: UserCreateOrConnectWithoutResumeInput
+  export type ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResumeHistoryCreateWithoutUserInput, ResumeHistoryUncheckedCreateWithoutUserInput> | ResumeHistoryCreateWithoutUserInput[] | ResumeHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResumeHistoryCreateOrConnectWithoutUserInput | ResumeHistoryCreateOrConnectWithoutUserInput[]
+    upsert?: ResumeHistoryUpsertWithWhereUniqueWithoutUserInput | ResumeHistoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResumeHistoryCreateManyUserInputEnvelope
+    set?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+    disconnect?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+    delete?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+    connect?: ResumeHistoryWhereUniqueInput | ResumeHistoryWhereUniqueInput[]
+    update?: ResumeHistoryUpdateWithWhereUniqueWithoutUserInput | ResumeHistoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResumeHistoryUpdateManyWithWhereWithoutUserInput | ResumeHistoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResumeHistoryScalarWhereInput | ResumeHistoryScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutResumesInput = {
+    create?: XOR<UserCreateWithoutResumesInput, UserUncheckedCreateWithoutResumesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResumesInput
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutResumeNestedInput = {
-    create?: XOR<UserCreateWithoutResumeInput, UserUncheckedCreateWithoutResumeInput>
-    connectOrCreate?: UserCreateOrConnectWithoutResumeInput
-    upsert?: UserUpsertWithoutResumeInput
+  export type ResumeHistoryCreateNestedOneWithoutResumeInput = {
+    create?: XOR<ResumeHistoryCreateWithoutResumeInput, ResumeHistoryUncheckedCreateWithoutResumeInput>
+    connectOrCreate?: ResumeHistoryCreateOrConnectWithoutResumeInput
+    connect?: ResumeHistoryWhereUniqueInput
+  }
+
+  export type ResumeHistoryUncheckedCreateNestedOneWithoutResumeInput = {
+    create?: XOR<ResumeHistoryCreateWithoutResumeInput, ResumeHistoryUncheckedCreateWithoutResumeInput>
+    connectOrCreate?: ResumeHistoryCreateOrConnectWithoutResumeInput
+    connect?: ResumeHistoryWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutResumesNestedInput = {
+    create?: XOR<UserCreateWithoutResumesInput, UserUncheckedCreateWithoutResumesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResumesInput
+    upsert?: UserUpsertWithoutResumesInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResumeInput, UserUpdateWithoutResumeInput>, UserUncheckedUpdateWithoutResumeInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResumesInput, UserUpdateWithoutResumesInput>, UserUncheckedUpdateWithoutResumesInput>
+  }
+
+  export type ResumeHistoryUpdateOneWithoutResumeNestedInput = {
+    create?: XOR<ResumeHistoryCreateWithoutResumeInput, ResumeHistoryUncheckedCreateWithoutResumeInput>
+    connectOrCreate?: ResumeHistoryCreateOrConnectWithoutResumeInput
+    upsert?: ResumeHistoryUpsertWithoutResumeInput
+    disconnect?: ResumeHistoryWhereInput | boolean
+    delete?: ResumeHistoryWhereInput | boolean
+    connect?: ResumeHistoryWhereUniqueInput
+    update?: XOR<XOR<ResumeHistoryUpdateToOneWithWhereWithoutResumeInput, ResumeHistoryUpdateWithoutResumeInput>, ResumeHistoryUncheckedUpdateWithoutResumeInput>
+  }
+
+  export type ResumeHistoryUncheckedUpdateOneWithoutResumeNestedInput = {
+    create?: XOR<ResumeHistoryCreateWithoutResumeInput, ResumeHistoryUncheckedCreateWithoutResumeInput>
+    connectOrCreate?: ResumeHistoryCreateOrConnectWithoutResumeInput
+    upsert?: ResumeHistoryUpsertWithoutResumeInput
+    disconnect?: ResumeHistoryWhereInput | boolean
+    delete?: ResumeHistoryWhereInput | boolean
+    connect?: ResumeHistoryWhereUniqueInput
+    update?: XOR<XOR<ResumeHistoryUpdateToOneWithWhereWithoutResumeInput, ResumeHistoryUpdateWithoutResumeInput>, ResumeHistoryUncheckedUpdateWithoutResumeInput>
+  }
+
+  export type UserCreateNestedOneWithoutResumeHistoryInput = {
+    create?: XOR<UserCreateWithoutResumeHistoryInput, UserUncheckedCreateWithoutResumeHistoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResumeHistoryInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ResumeCreateNestedOneWithoutHistoryInput = {
+    create?: XOR<ResumeCreateWithoutHistoryInput, ResumeUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: ResumeCreateOrConnectWithoutHistoryInput
+    connect?: ResumeWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutResumeHistoryNestedInput = {
+    create?: XOR<UserCreateWithoutResumeHistoryInput, UserUncheckedCreateWithoutResumeHistoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResumeHistoryInput
+    upsert?: UserUpsertWithoutResumeHistoryInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResumeHistoryInput, UserUpdateWithoutResumeHistoryInput>, UserUncheckedUpdateWithoutResumeHistoryInput>
+  }
+
+  export type ResumeUpdateOneRequiredWithoutHistoryNestedInput = {
+    create?: XOR<ResumeCreateWithoutHistoryInput, ResumeUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: ResumeCreateOrConnectWithoutHistoryInput
+    upsert?: ResumeUpsertWithoutHistoryInput
+    connect?: ResumeWhereUniqueInput
+    update?: XOR<XOR<ResumeUpdateToOneWithWhereWithoutHistoryInput, ResumeUpdateWithoutHistoryInput>, ResumeUncheckedUpdateWithoutHistoryInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3976,23 +5576,47 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type ResumeCreateWithoutUserInput = {
-    id?: string
     fileName: string
     fileSize: number
     fileUrl: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    resumeData: JsonNullValueInput | InputJsonValue
+    uploadedAt?: Date | string
+    history?: ResumeHistoryCreateNestedOneWithoutResumeInput
   }
 
   export type ResumeUncheckedCreateWithoutUserInput = {
-    id?: string
+    id?: number
     fileName: string
     fileSize: number
     fileUrl: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    resumeData: JsonNullValueInput | InputJsonValue
+    uploadedAt?: Date | string
+    history?: ResumeHistoryUncheckedCreateNestedOneWithoutResumeInput
   }
 
   export type ResumeCreateOrConnectWithoutUserInput = {
@@ -4002,6 +5626,27 @@ export namespace Prisma {
 
   export type ResumeCreateManyUserInputEnvelope = {
     data: ResumeCreateManyUserInput | ResumeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResumeHistoryCreateWithoutUserInput = {
+    createdAt?: Date | string
+    resume: ResumeCreateNestedOneWithoutHistoryInput
+  }
+
+  export type ResumeHistoryUncheckedCreateWithoutUserInput = {
+    id?: number
+    resumeId: number
+    createdAt?: Date | string
+  }
+
+  export type ResumeHistoryCreateOrConnectWithoutUserInput = {
+    where: ResumeHistoryWhereUniqueInput
+    create: XOR<ResumeHistoryCreateWithoutUserInput, ResumeHistoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResumeHistoryCreateManyUserInputEnvelope = {
+    data: ResumeHistoryCreateManyUserInput | ResumeHistoryCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -4025,91 +5670,283 @@ export namespace Prisma {
     AND?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
     OR?: ResumeScalarWhereInput[]
     NOT?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
-    id?: StringFilter<"Resume"> | string
+    id?: IntFilter<"Resume"> | number
     userId?: IntFilter<"Resume"> | number
     fileName?: StringFilter<"Resume"> | string
     fileSize?: IntFilter<"Resume"> | number
     fileUrl?: StringFilter<"Resume"> | string
-    createdAt?: DateTimeFilter<"Resume"> | Date | string
-    updatedAt?: DateTimeFilter<"Resume"> | Date | string
+    resumeData?: JsonFilter<"Resume">
+    uploadedAt?: DateTimeFilter<"Resume"> | Date | string
   }
 
-  export type UserCreateWithoutResumeInput = {
+  export type ResumeHistoryUpsertWithWhereUniqueWithoutUserInput = {
+    where: ResumeHistoryWhereUniqueInput
+    update: XOR<ResumeHistoryUpdateWithoutUserInput, ResumeHistoryUncheckedUpdateWithoutUserInput>
+    create: XOR<ResumeHistoryCreateWithoutUserInput, ResumeHistoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResumeHistoryUpdateWithWhereUniqueWithoutUserInput = {
+    where: ResumeHistoryWhereUniqueInput
+    data: XOR<ResumeHistoryUpdateWithoutUserInput, ResumeHistoryUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ResumeHistoryUpdateManyWithWhereWithoutUserInput = {
+    where: ResumeHistoryScalarWhereInput
+    data: XOR<ResumeHistoryUpdateManyMutationInput, ResumeHistoryUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ResumeHistoryScalarWhereInput = {
+    AND?: ResumeHistoryScalarWhereInput | ResumeHistoryScalarWhereInput[]
+    OR?: ResumeHistoryScalarWhereInput[]
+    NOT?: ResumeHistoryScalarWhereInput | ResumeHistoryScalarWhereInput[]
+    id?: IntFilter<"ResumeHistory"> | number
+    resumeId?: IntFilter<"ResumeHistory"> | number
+    userId?: IntFilter<"ResumeHistory"> | number
+    createdAt?: DateTimeFilter<"ResumeHistory"> | Date | string
+  }
+
+  export type UserCreateWithoutResumesInput = {
     email: string
     name?: string | null
     createdAt?: Date | string
+    resumeHistory?: ResumeHistoryCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutResumeInput = {
+  export type UserUncheckedCreateWithoutResumesInput = {
     id?: number
     email: string
     name?: string | null
     createdAt?: Date | string
+    resumeHistory?: ResumeHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutResumeInput = {
+  export type UserCreateOrConnectWithoutResumesInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutResumeInput, UserUncheckedCreateWithoutResumeInput>
+    create: XOR<UserCreateWithoutResumesInput, UserUncheckedCreateWithoutResumesInput>
   }
 
-  export type UserUpsertWithoutResumeInput = {
-    update: XOR<UserUpdateWithoutResumeInput, UserUncheckedUpdateWithoutResumeInput>
-    create: XOR<UserCreateWithoutResumeInput, UserUncheckedCreateWithoutResumeInput>
+  export type ResumeHistoryCreateWithoutResumeInput = {
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutResumeHistoryInput
+  }
+
+  export type ResumeHistoryUncheckedCreateWithoutResumeInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
+  }
+
+  export type ResumeHistoryCreateOrConnectWithoutResumeInput = {
+    where: ResumeHistoryWhereUniqueInput
+    create: XOR<ResumeHistoryCreateWithoutResumeInput, ResumeHistoryUncheckedCreateWithoutResumeInput>
+  }
+
+  export type UserUpsertWithoutResumesInput = {
+    update: XOR<UserUpdateWithoutResumesInput, UserUncheckedUpdateWithoutResumesInput>
+    create: XOR<UserCreateWithoutResumesInput, UserUncheckedCreateWithoutResumesInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutResumeInput = {
+  export type UserUpdateToOneWithWhereWithoutResumesInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutResumeInput, UserUncheckedUpdateWithoutResumeInput>
+    data: XOR<UserUpdateWithoutResumesInput, UserUncheckedUpdateWithoutResumesInput>
   }
 
-  export type UserUpdateWithoutResumeInput = {
+  export type UserUpdateWithoutResumesInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resumeHistory?: ResumeHistoryUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutResumeInput = {
+  export type UserUncheckedUpdateWithoutResumesInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resumeHistory?: ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type ResumeCreateManyUserInput = {
-    id?: string
+  export type ResumeHistoryUpsertWithoutResumeInput = {
+    update: XOR<ResumeHistoryUpdateWithoutResumeInput, ResumeHistoryUncheckedUpdateWithoutResumeInput>
+    create: XOR<ResumeHistoryCreateWithoutResumeInput, ResumeHistoryUncheckedCreateWithoutResumeInput>
+    where?: ResumeHistoryWhereInput
+  }
+
+  export type ResumeHistoryUpdateToOneWithWhereWithoutResumeInput = {
+    where?: ResumeHistoryWhereInput
+    data: XOR<ResumeHistoryUpdateWithoutResumeInput, ResumeHistoryUncheckedUpdateWithoutResumeInput>
+  }
+
+  export type ResumeHistoryUpdateWithoutResumeInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutResumeHistoryNestedInput
+  }
+
+  export type ResumeHistoryUncheckedUpdateWithoutResumeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutResumeHistoryInput = {
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    resumes?: ResumeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutResumeHistoryInput = {
+    id?: number
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutResumeHistoryInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutResumeHistoryInput, UserUncheckedCreateWithoutResumeHistoryInput>
+  }
+
+  export type ResumeCreateWithoutHistoryInput = {
     fileName: string
     fileSize: number
     fileUrl: string
+    resumeData: JsonNullValueInput | InputJsonValue
+    uploadedAt?: Date | string
+    user: UserCreateNestedOneWithoutResumesInput
+  }
+
+  export type ResumeUncheckedCreateWithoutHistoryInput = {
+    id?: number
+    userId: number
+    fileName: string
+    fileSize: number
+    fileUrl: string
+    resumeData: JsonNullValueInput | InputJsonValue
+    uploadedAt?: Date | string
+  }
+
+  export type ResumeCreateOrConnectWithoutHistoryInput = {
+    where: ResumeWhereUniqueInput
+    create: XOR<ResumeCreateWithoutHistoryInput, ResumeUncheckedCreateWithoutHistoryInput>
+  }
+
+  export type UserUpsertWithoutResumeHistoryInput = {
+    update: XOR<UserUpdateWithoutResumeHistoryInput, UserUncheckedUpdateWithoutResumeHistoryInput>
+    create: XOR<UserCreateWithoutResumeHistoryInput, UserUncheckedCreateWithoutResumeHistoryInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutResumeHistoryInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutResumeHistoryInput, UserUncheckedUpdateWithoutResumeHistoryInput>
+  }
+
+  export type UserUpdateWithoutResumeHistoryInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resumes?: ResumeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutResumeHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ResumeUpsertWithoutHistoryInput = {
+    update: XOR<ResumeUpdateWithoutHistoryInput, ResumeUncheckedUpdateWithoutHistoryInput>
+    create: XOR<ResumeCreateWithoutHistoryInput, ResumeUncheckedCreateWithoutHistoryInput>
+    where?: ResumeWhereInput
+  }
+
+  export type ResumeUpdateToOneWithWhereWithoutHistoryInput = {
+    where?: ResumeWhereInput
+    data: XOR<ResumeUpdateWithoutHistoryInput, ResumeUncheckedUpdateWithoutHistoryInput>
+  }
+
+  export type ResumeUpdateWithoutHistoryInput = {
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutResumesNestedInput
+  }
+
+  export type ResumeUncheckedUpdateWithoutHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResumeCreateManyUserInput = {
+    id?: number
+    fileName: string
+    fileSize: number
+    fileUrl: string
+    resumeData: JsonNullValueInput | InputJsonValue
+    uploadedAt?: Date | string
+  }
+
+  export type ResumeHistoryCreateManyUserInput = {
+    id?: number
+    resumeId: number
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type ResumeUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
     fileName?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     fileUrl?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    history?: ResumeHistoryUpdateOneWithoutResumeNestedInput
   }
 
   export type ResumeUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     fileName?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     fileUrl?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    history?: ResumeHistoryUncheckedUpdateOneWithoutResumeNestedInput
   }
 
   export type ResumeUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     fileName?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     fileUrl?: StringFieldUpdateOperationsInput | string
+    resumeData?: JsonNullValueInput | InputJsonValue
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResumeHistoryUpdateWithoutUserInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resume?: ResumeUpdateOneRequiredWithoutHistoryNestedInput
+  }
+
+  export type ResumeHistoryUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    resumeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResumeHistoryUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    resumeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

@@ -8,6 +8,7 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { getFileNameWithoutExtension } from "@/lib";
 import { bucketName } from "@/constants";
+import { ExcelDownload } from '../@shared/components/Excel'
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

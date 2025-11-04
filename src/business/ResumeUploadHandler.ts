@@ -15,7 +15,6 @@ export const resumeUploadHandler = async (uploadData: UploadDto) => {
     const file = await supabase.storage
       .from(bucketName)
       .download(uploadData.fileUrl.split("/")[1]);
-    console.log(file);
     const textExtractionService = new ExtractTextService();
     if (!file.data) {
       console.log("file data unavailable");

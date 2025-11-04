@@ -16,43 +16,42 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  createdAt DateTime @default(now())
+  id             Int             @id @default(autoincrement())
+  email          String          @unique
+  name           String?
+  createdAt      DateTime        @default(now())
 
-  resume Resume[]
+  resumes        Resume[]
+  resumeHistory  ResumeHistory[]
+
   @@index([createdAt(sort: Desc)])
 }
 
 model Resume {
-  id String @id @default(cuid())
-  userId Int @unique
+  id          Int             @id @default(autoincrement())
+  userId      Int             @unique // each user has one resume
+  fileName    String
+  fileSize    Int
+  fileUrl     String
+  resumeData  Json
+  uploadedAt  DateTime        @default(now())
 
-  fileName   String
-  fileSize   Int
-  fileUrl    String
-  resumeData Json
-
-  uploadedAt DateTime @default(now())
-
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  history     ResumeHistory?  // inverse 1:1 relation
 
   @@index([userId])
   @@index([uploadedAt(sort: Desc)])
 }
 
 model ResumeHistory {
-  id String @id @default(cuid())
-  resumeId Int @unique
-  userId Int @unique
+  id         Int       @id @default(autoincrement())
+  resumeId   Int       @unique  // one history per resume
+  userId     Int
+  createdAt  DateTime  @default(now())
 
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  resume Resume @relation(fields[resumeId], references: [id])
-
-  createdAt DateTime @default(now())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume     Resume    @relation(fields: [resumeId], references: [id]) // foreign key on this side
 
   @@index([userId])
   @@index([createdAt(sort: Desc)])
 }
-
