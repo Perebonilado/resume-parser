@@ -1,7 +1,0 @@
-.check-input:checked~.check-icon {
-  display: block;
-}
-
-.check-input~.check-icon {
-  display: none;
-}

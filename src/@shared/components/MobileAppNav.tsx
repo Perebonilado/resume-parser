@@ -1,7 +1,6 @@
 import Hamburger from "@/@shared/components/Hamburger";
 import React, { FC } from "react";
 import UserManagementBox from "./UserManagementBox";
-import GoogleTranslateLanguagePicker from "./GoogleTranslateLanguagePicker";
 
 interface Props {
   handleClick: () => void;
