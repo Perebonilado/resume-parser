@@ -18,7 +18,7 @@ export interface UploadMistralFileModel {
 class MistralClient {
   constructor() {
     this.client = new Mistral({
-      apiKey: process.env.MISTRAL_API_KEY!,
+      apiKey: process.env.NEXT_PUBLIC_MISTRAL_API_KEY!,
     });
   }
 
@@ -62,7 +62,7 @@ export class MistralOcrService extends MistralClient {
         form,
         {
           headers: {
-            Authorization: `Bearer ${process.env.MISTRAL_API_KEY!}`,
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_MISTRAL_API_KEY!}`,
               ...form.getHeaders(), // Set proper headers for FormData
             Accept: "application/json",
           },

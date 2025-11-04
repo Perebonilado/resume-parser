@@ -56,7 +56,7 @@ export default function LoginPage({
                     type="button"
                     onClick={() => {
                       console.log(Object.values(providers))
-                      console.log(process.env.NEXTAUTH_SECRET, process.env.NEXT_PUBLIC_SUPABASE_URL)
+                      console.log(process.env.NEXT_PUBLIC_NEXTAUTH_SECRET, process.env.NEXT_PUBLIC_SUPABASE_URL)
                       signIn(Object.values(providers)[0].id)
                     }}
                     className="!w-full !text-gray-700 !font-semibold !py-4 !rounded-xl hover:!bg-gray-50 hover:!border-gray-300 transition-all duration-200 hover:shadow-md"

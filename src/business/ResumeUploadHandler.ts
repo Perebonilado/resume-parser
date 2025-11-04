@@ -52,7 +52,7 @@ export const resumeUploadHandler = async (
 
     // parse data
     const model = createOpenAI({
-      apiKey: process.env.OPEN_AI_API_KEY,
+      apiKey: process.env.NEXT_PUBLIC_OPEN_AI_API_KEY,
     });
     const parsedData = await generateObject({
       model: model.responses("gpt-5-mini"),
