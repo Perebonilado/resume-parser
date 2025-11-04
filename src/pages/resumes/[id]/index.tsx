@@ -5,16 +5,69 @@ import ResumeSummary from "@/@modules/resumes/ResumeSummary";
 import ResumeWorkExperience from "@/@modules/resumes/ResumeWorkExperience";
 import Container from "@/@shared/ui/Container";
 import Layout from "@/layout";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  ResumeRepository,
+  ResumeRepositoryImpl,
+} from "@/repository/ResumeRepository";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
+import {
+  resetLoaderState,
+  setLoading,
+  setLoadingMessage,
+} from "@/features/loaderSlice";
+import { Resume as ResumeType } from "@/zodSchemas/ResumeSchema";
 
 const Resume = () => {
+  const [resume, setResume] = useState<ResumeType | null>(null);
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  const fetchResumeData = async () => {
+    try {
+      dispatch(
+        setLoadingMessage({ loadingMessage: "Fetching resume details" })
+      );
+      dispatch(setLoading({ loading: true }));
+      const { id } = params;
+      if (!id) return;
+
+      const resumeRepository: ResumeRepository = new ResumeRepositoryImpl();
+      const data = await resumeRepository.findById(Number(id));
+      if (!data) return;
+      const resumeData = data.resumeData!;
+      const resumeInfo = JSON.parse(resumeData as string) as ResumeType;
+
+      setResume(resumeInfo);
+    } catch (error) {
+      toast.error("something went wrong fetching resume data");
+    } finally {
+      dispatch(resetLoaderState());
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchResumeData();
+  // }, []);
+
   return (
     <Layout>
       <Container className="py-10">
-        <ResumeHeader data={dummyResume} />
-        <ResumeSummary summary={dummyResume.summary} />
-        <ResumeWorkExperience experiences={dummyResume.workExperience} />
-        <ResumeEducation education={dummyResume.education} />
-        <ResumeSkills skills={dummyResume.skills} />
+        {!resume && (
+          <p className="text-center text-gray-500">Resume Data Unavailable</p>
+        )}
+
+        {resume && (
+          <>
+            <ResumeHeader data={resume} />
+            <ResumeSummary summary={resume.summary} />
+            <ResumeWorkExperience experiences={resume.workExperience} />
+            <ResumeEducation education={resume.education} />
+            <ResumeSkills skills={resume.skills} />
+          </>
+        )}
       </Container>
     </Layout>
   );
@@ -22,49 +75,3 @@ const Resume = () => {
 
 export default Resume;
 
-const dummyResume = {
-  fullName: "John Doe",
-  email: "john.doe@example.com",
-  phone: "+1 (555) 123-4567",
-  location: "San Francisco, CA",
-  summary:
-    "Full-stack developer with 5+ years of experience building scalable web applications using React, Node.js, and PostgreSQL.",
-  workExperience: [
-    {
-      company: "TechCorp Inc.",
-      position: "Senior Software Engineer",
-      startDate: "Jan 2022",
-      endDate: "Present",
-      description: [
-        "Led a team of 5 developers to build a new SaaS analytics platform.",
-        "Improved API response times by 30% by optimizing database queries.",
-      ],
-    },
-    {
-      company: "StartupHub",
-      position: "Software Engineer",
-      startDate: "Jun 2019",
-      endDate: "Dec 2021",
-      description: [
-        "Developed internal dashboards using React and Tailwind CSS.",
-        "Integrated third-party APIs to enhance product functionality.",
-      ],
-    },
-  ],
-  education: [
-    {
-      institution: "University of California, Berkeley",
-      degree: "Bachelor of Science",
-      field: "Computer Science",
-      graduationDate: "May 2019",
-    },
-  ],
-  skills: [
-    "JavaScript",
-    "React",
-    "Node.js",
-    "PostgreSQL",
-    "TypeScript",
-    "Tailwind CSS",
-  ],
-};
