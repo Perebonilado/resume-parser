@@ -169,6 +169,10 @@ const config = {
         "fromEnvVar": null,
         "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -195,8 +199,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../prisma-dist\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"NEXT_PUBLIC_DATABASE_URL\")\n  directUrl = env(\"NEXT_PUBLIC_DIRECT_URL\")\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  name      String?\n  createdAt DateTime @default(now())\n\n  resumes         Resume[] // one user -> many resumes\n  resumeHistories ResumeHistory[] // optional: if you ever want to find histories by user\n\n  @@index([createdAt(sort: Desc)])\n}\n\nmodel Resume {\n  id     Int @id @default(autoincrement())\n  userId Int\n\n  fileName   String\n  fileSize   Int\n  fileUrl    String\n  resumeData Json\n\n  uploadedAt DateTime @default(now())\n\n  // Relationships\n  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)\n  history ResumeHistory? @relation(\"ResumeToHistory\") // one resume -> one history (optional)\n\n  @@index([userId])\n  @@index([uploadedAt(sort: Desc)])\n}\n\nmodel ResumeHistory {\n  id       Int @id @default(autoincrement())\n  resumeId Int @unique // one resume -> one history\n  userId   Int\n\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n  resume Resume @relation(\"ResumeToHistory\", fields: [resumeId], references: [id])\n\n  createdAt DateTime @default(now())\n\n  @@index([userId])\n  @@index([createdAt(sort: Desc)])\n}\n",
-  "inlineSchemaHash": "b1f6e9e9954471ea7226cb83f26ad3d7f6f4b7821c882a7153fa5071ea2a1390",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../prisma-dist\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"NEXT_PUBLIC_DATABASE_URL\")\n  directUrl = env(\"NEXT_PUBLIC_DIRECT_URL\")\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  name      String?\n  createdAt DateTime @default(now())\n\n  resumes         Resume[] // one user -> many resumes\n  resumeHistories ResumeHistory[] // optional: if you ever want to find histories by user\n\n  @@index([createdAt(sort: Desc)])\n}\n\nmodel Resume {\n  id     Int @id @default(autoincrement())\n  userId Int\n\n  fileName   String\n  fileSize   Int\n  fileUrl    String\n  resumeData Json\n\n  uploadedAt DateTime @default(now())\n\n  // Relationships\n  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)\n  history ResumeHistory? @relation(\"ResumeToHistory\") // one resume -> one history (optional)\n\n  @@index([userId])\n  @@index([uploadedAt(sort: Desc)])\n}\n\nmodel ResumeHistory {\n  id       Int @id @default(autoincrement())\n  resumeId Int @unique // one resume -> one history\n  userId   Int\n\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n  resume Resume @relation(\"ResumeToHistory\", fields: [resumeId], references: [id])\n\n  createdAt DateTime @default(now())\n\n  @@index([userId])\n  @@index([createdAt(sort: Desc)])\n}\n",
+  "inlineSchemaHash": "8fd8320a8ac78ea3a31c15d5dbf50c9b8ff27ec23e444e2cdf5c495b80b84c65",
   "copyEngine": true
 }
 config.dirname = '/'
