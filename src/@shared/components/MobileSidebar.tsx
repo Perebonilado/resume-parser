@@ -46,12 +46,12 @@ const MobileSidebar: FC<Props> = ({ isSideNav, handleCloseSidebar }) => {
               showTextByDefault={true}
               icon={
                 <UploadIcon
-                  fill={activeNavLink === "/upload" ? "#2F004F" : "#FFFFFF"}
+                  fill={activeNavLink === "/" ? "#2F004F" : "#FFFFFF"}
                 />
               }
-              isActive={activeNavLink === "/upload"}
-              title="New Document"
-              link="/upload"
+              isActive={activeNavLink === "/"}
+              title="Upload Resume"
+              link="/"
             />
             <CollapsibleButton
               showTextByDefault={true}
@@ -61,8 +61,8 @@ const MobileSidebar: FC<Props> = ({ isSideNav, handleCloseSidebar }) => {
                 />
               }
               isActive={activeNavLink === "/documents"}
-              title="All Documents"
-              link="/documents"
+              title="All Resumes"
+              link="/resumes"
             />
           </>
         }

@@ -28,12 +28,12 @@ const Sidebar: FC = () => {
       <CollapsibleButton
         icon={
           <NewDocumentIcon
-            fill={activeNavLink === "/new-document" ? "#2F004F" : "#FFFFFF"}
+            fill={activeNavLink === "/" ? "#2F004F" : "#FFFFFF"}
           />
         }
-        isActive={activeNavLink === "/new-document"}
-        title="New Document"
-        link="/new-document"
+        isActive={activeNavLink === "/"}
+        title="Upload Resume"
+        link="/"
       />
       <CollapsibleButton
         icon={
@@ -42,8 +42,8 @@ const Sidebar: FC = () => {
           />
         }
         isActive={activeNavLink === "/documents"}
-        title="All Documents"
-        link="/documents"
+        title="All Resumes"
+        link="/resumes"
       />
 
       <div className="w-full h-[1px] bg-white rounded-full my-3"></div>
