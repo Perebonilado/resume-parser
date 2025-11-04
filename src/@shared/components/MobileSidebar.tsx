@@ -66,6 +66,7 @@ const MobileSidebar: FC<Props> = ({ isSideNav, handleCloseSidebar }) => {
             />
 
             <CollapsibleButton
+              showTextByDefault={true}
               icon={
                 <AllDocumentsIcon
                   fill={
