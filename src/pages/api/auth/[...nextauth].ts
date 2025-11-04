@@ -9,11 +9,11 @@ export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET as string,
+      clientId: "1047441427507-vr362p8240491lmna821sd96bi94uo43.apps.googleusercontent.com",
+      clientSecret: "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",
     }),
   ],
-  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET || "fKAiumroLqkFdJHDwQDcT+g/BtG7hFGUfRQT8ZW/gsc=" ,
+  secret: "fKAiumroLqkFdJHDwQDcT+g/BtG7hFGUfRQT8ZW/gsc=" ,
   pages: {
     signIn: "/auth/login",
   },
