@@ -21,37 +21,42 @@ model User {
   name           String?
   createdAt      DateTime        @default(now())
 
-  resumes        Resume[]
-  resumeHistory  ResumeHistory[]
+  resumes        Resume[]        // one user -> many resumes
+  resumeHistories ResumeHistory[] // optional: if you ever want to find histories by user
 
   @@index([createdAt(sort: Desc)])
 }
 
 model Resume {
   id          Int             @id @default(autoincrement())
-  userId      Int             @unique // each user has one resume
+  userId      Int
+
   fileName    String
   fileSize    Int
   fileUrl     String
   resumeData  Json
+
   uploadedAt  DateTime        @default(now())
 
+  // Relationships
   user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  history     ResumeHistory?  // inverse 1:1 relation
+  history     ResumeHistory?  @relation("ResumeToHistory") // one resume -> one history (optional)
 
   @@index([userId])
   @@index([uploadedAt(sort: Desc)])
 }
 
 model ResumeHistory {
-  id         Int       @id @default(autoincrement())
-  resumeId   Int       @unique  // one history per resume
-  userId     Int
-  createdAt  DateTime  @default(now())
+  id          Int      @id @default(autoincrement())
+  resumeId    Int      @unique   // one resume -> one history
+  userId      Int
 
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  resume     Resume    @relation(fields: [resumeId], references: [id]) // foreign key on this side
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume      Resume   @relation("ResumeToHistory", fields: [resumeId], references: [id])
+
+  createdAt   DateTime @default(now())
 
   @@index([userId])
   @@index([createdAt(sort: Desc)])
 }
+

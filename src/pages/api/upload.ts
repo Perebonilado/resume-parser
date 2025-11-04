@@ -3,11 +3,13 @@ import { withAuth, AuthenticatedRequest } from "@/lib/middleware/withAuth";
 import { withErrorHandler } from "@/lib/middleware/withErrorHandler";
 import { withMethodCheck } from "@/lib/middleware/withMethodCheck";
 import { compose } from "@/lib/middleware/compose";
-import { UploadDto } from "@/dto/UploadDto";
 import { validateUploadDto } from "@/validation/uploadValidationSchema";
-import { resumeUploadHandler } from "@/business/ResumeUploadHandler";
+import {
+  resumeUploadHandler,
+  ResumeUploadModel,
+} from "@/business/ResumeUploadHandler";
 
-type SuccessResponse = UploadDto;
+type SuccessResponse = ResumeUploadModel;
 type ErrorResponse = { error: string };
 
 async function uploadFileHandler(
@@ -16,16 +18,12 @@ async function uploadFileHandler(
 ) {
   // Validate request body
   const uploadData = validateUploadDto(req.body);
-  const parsedData = await resumeUploadHandler(uploadData);
-  console.log(parsedData);
-
-  // Save to database
+  const userEmail = req.userEmail;
+  const data = await resumeUploadHandler(uploadData, userEmail);
 
   // Return success response
   return res.status(200).json({
-    fileName: "",
-    fileSize: "",
-    fileUrl: "",
+    ...data,
   });
 }
 

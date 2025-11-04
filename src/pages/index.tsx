@@ -8,7 +8,7 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { getFileNameWithoutExtension } from "@/lib";
 import { bucketName } from "@/constants";
-import { ExcelDownload } from '../@shared/components/Excel'
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -43,6 +43,12 @@ export default function Home() {
 
   return (
     <Layout>
+      <Button
+        title="so"
+        onClick={() => {
+          signOut();
+        }}
+      />
       <div className="flex flex-col gap-[28px] mx-auto w-full max-w-[500px] pt-2 pb-10">
         <UploadContainer
           attachedFile={selectedFile}

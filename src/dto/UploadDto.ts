@@ -1,5 +1,5 @@
 export type UploadDto = {
   fileName: string;
-  fileSize: string;
+  fileSize: number;
   fileUrl: string;
 };

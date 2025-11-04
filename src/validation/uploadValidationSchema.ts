@@ -22,7 +22,7 @@ export function validateUploadDto(body: any): UploadDto {
     throw new ValidationError(errors.join(", "));
   }
 
-  return {
+  return <UploadDto>{
     fileName: body.fileName,
     fileSize: body.fileSize,
     fileUrl: body.fileUrl,
