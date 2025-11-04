@@ -64,6 +64,19 @@ const MobileSidebar: FC<Props> = ({ isSideNav, handleCloseSidebar }) => {
               title="All Resumes"
               link="/resumes"
             />
+
+            <CollapsibleButton
+              icon={
+                <AllDocumentsIcon
+                  fill={
+                    activeNavLink === "/resume-history" ? "#2F004F" : "#FFFFFF"
+                  }
+                />
+              }
+              isActive={activeNavLink === "/resume-history"}
+              title="Resumes History"
+              link="/resume-history"
+            />
           </>
         }
       </div>

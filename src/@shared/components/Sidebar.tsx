@@ -7,6 +7,7 @@ import NewDocumentIcon from "@/icons/NewDocumentIcon";
 import { useActiveNavLink } from "@/hooks/useActiveNavLink";
 import AllDocumentsIcon from "@/icons/AllDocumentsIcon";
 import UserLogoutBox from "./UserLogoutBox";
+import { Archive, ArchiveXIcon, FileTypeCornerIcon } from "lucide-react";
 
 const Sidebar: FC = () => {
   const { navOpen: isOpen } = useSelector(
@@ -44,6 +45,17 @@ const Sidebar: FC = () => {
         isActive={activeNavLink === "/documents"}
         title="All Resumes"
         link="/resumes"
+      />
+
+      <CollapsibleButton
+        icon={
+          <AllDocumentsIcon
+            fill={activeNavLink === "/resume-history" ? "#2F004F" : "#FFFFFF"}
+          />
+        }
+        isActive={activeNavLink === "/resume-history"}
+        title="Resumes History"
+        link="/resume-history"
       />
 
       <div className="w-full h-[1px] bg-white rounded-full my-3"></div>
