@@ -64,7 +64,7 @@ const UploadContainer: FC<Props> = ({
                   <PDFIconAlt />
                 </div>
                 <p className="text-xl font-semibold">
-                  Upload your material here
+                  Upload your resume here
                 </p>
                 <p className="text-[#00000080] text-xs mt-1">
                   Max size: {maxFileSizeMB}mb pdf files only
