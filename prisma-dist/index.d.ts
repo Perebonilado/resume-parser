@@ -1044,12 +1044,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     resumes: number
-    resumeHistory: number
+    resumeHistories: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     resumes?: boolean | UserCountOutputTypeCountResumesArgs
-    resumeHistory?: boolean | UserCountOutputTypeCountResumeHistoryArgs
+    resumeHistories?: boolean | UserCountOutputTypeCountResumeHistoriesArgs
   }
 
   // Custom InputTypes
@@ -1073,7 +1073,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountResumeHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountResumeHistoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResumeHistoryWhereInput
   }
 
@@ -1273,7 +1273,7 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     resumes?: boolean | User$resumesArgs<ExtArgs>
-    resumeHistory?: boolean | User$resumeHistoryArgs<ExtArgs>
+    resumeHistories?: boolean | User$resumeHistoriesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1301,7 +1301,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     resumes?: boolean | User$resumesArgs<ExtArgs>
-    resumeHistory?: boolean | User$resumeHistoryArgs<ExtArgs>
+    resumeHistories?: boolean | User$resumeHistoriesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1311,7 +1311,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       resumes: Prisma.$ResumePayload<ExtArgs>[]
-      resumeHistory: Prisma.$ResumeHistoryPayload<ExtArgs>[]
+      resumeHistories: Prisma.$ResumeHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1713,7 +1713,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     resumes<T extends User$resumesArgs<ExtArgs> = {}>(args?: Subset<T, User$resumesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    resumeHistory<T extends User$resumeHistoryArgs<ExtArgs> = {}>(args?: Subset<T, User$resumeHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resumeHistories<T extends User$resumeHistoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$resumeHistoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2159,9 +2159,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.resumeHistory
+   * User.resumeHistories
    */
-  export type User$resumeHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$resumeHistoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the ResumeHistory
      */
@@ -4615,7 +4615,7 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     resumes?: ResumeListRelationFilter
-    resumeHistory?: ResumeHistoryListRelationFilter
+    resumeHistories?: ResumeHistoryListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4624,7 +4624,7 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     resumes?: ResumeOrderByRelationAggregateInput
-    resumeHistory?: ResumeHistoryOrderByRelationAggregateInput
+    resumeHistories?: ResumeHistoryOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4636,7 +4636,7 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     resumes?: ResumeListRelationFilter
-    resumeHistory?: ResumeHistoryListRelationFilter
+    resumeHistories?: ResumeHistoryListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4690,10 +4690,10 @@ export namespace Prisma {
 
   export type ResumeWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    userId?: number
     AND?: ResumeWhereInput | ResumeWhereInput[]
     OR?: ResumeWhereInput[]
     NOT?: ResumeWhereInput | ResumeWhereInput[]
+    userId?: IntFilter<"Resume"> | number
     fileName?: StringFilter<"Resume"> | string
     fileSize?: IntFilter<"Resume"> | number
     fileUrl?: StringFilter<"Resume"> | string
@@ -4701,7 +4701,7 @@ export namespace Prisma {
     uploadedAt?: DateTimeFilter<"Resume"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     history?: XOR<ResumeHistoryNullableScalarRelationFilter, ResumeHistoryWhereInput> | null
-  }, "id" | "userId">
+  }, "id">
 
   export type ResumeOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4791,7 +4791,7 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     resumes?: ResumeCreateNestedManyWithoutUserInput
-    resumeHistory?: ResumeHistoryCreateNestedManyWithoutUserInput
+    resumeHistories?: ResumeHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4800,7 +4800,7 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
-    resumeHistory?: ResumeHistoryUncheckedCreateNestedManyWithoutUserInput
+    resumeHistories?: ResumeHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4808,7 +4808,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     resumes?: ResumeUpdateManyWithoutUserNestedInput
-    resumeHistory?: ResumeHistoryUpdateManyWithoutUserNestedInput
+    resumeHistories?: ResumeHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4817,7 +4817,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
-    resumeHistory?: ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput
+    resumeHistories?: ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4912,7 +4912,7 @@ export namespace Prisma {
 
   export type ResumeHistoryCreateInput = {
     createdAt?: Date | string
-    user: UserCreateNestedOneWithoutResumeHistoryInput
+    user: UserCreateNestedOneWithoutResumeHistoriesInput
     resume: ResumeCreateNestedOneWithoutHistoryInput
   }
 
@@ -4925,7 +4925,7 @@ export namespace Prisma {
 
   export type ResumeHistoryUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutResumeHistoryNestedInput
+    user?: UserUpdateOneRequiredWithoutResumeHistoriesNestedInput
     resume?: ResumeUpdateOneRequiredWithoutHistoryNestedInput
   }
 
@@ -5413,9 +5413,9 @@ export namespace Prisma {
     update?: XOR<XOR<ResumeHistoryUpdateToOneWithWhereWithoutResumeInput, ResumeHistoryUpdateWithoutResumeInput>, ResumeHistoryUncheckedUpdateWithoutResumeInput>
   }
 
-  export type UserCreateNestedOneWithoutResumeHistoryInput = {
-    create?: XOR<UserCreateWithoutResumeHistoryInput, UserUncheckedCreateWithoutResumeHistoryInput>
-    connectOrCreate?: UserCreateOrConnectWithoutResumeHistoryInput
+  export type UserCreateNestedOneWithoutResumeHistoriesInput = {
+    create?: XOR<UserCreateWithoutResumeHistoriesInput, UserUncheckedCreateWithoutResumeHistoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResumeHistoriesInput
     connect?: UserWhereUniqueInput
   }
 
@@ -5425,12 +5425,12 @@ export namespace Prisma {
     connect?: ResumeWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutResumeHistoryNestedInput = {
-    create?: XOR<UserCreateWithoutResumeHistoryInput, UserUncheckedCreateWithoutResumeHistoryInput>
-    connectOrCreate?: UserCreateOrConnectWithoutResumeHistoryInput
-    upsert?: UserUpsertWithoutResumeHistoryInput
+  export type UserUpdateOneRequiredWithoutResumeHistoriesNestedInput = {
+    create?: XOR<UserCreateWithoutResumeHistoriesInput, UserUncheckedCreateWithoutResumeHistoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResumeHistoriesInput
+    upsert?: UserUpsertWithoutResumeHistoriesInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResumeHistoryInput, UserUpdateWithoutResumeHistoryInput>, UserUncheckedUpdateWithoutResumeHistoryInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResumeHistoriesInput, UserUpdateWithoutResumeHistoriesInput>, UserUncheckedUpdateWithoutResumeHistoriesInput>
   }
 
   export type ResumeUpdateOneRequiredWithoutHistoryNestedInput = {
@@ -5709,7 +5709,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
-    resumeHistory?: ResumeHistoryCreateNestedManyWithoutUserInput
+    resumeHistories?: ResumeHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutResumesInput = {
@@ -5717,7 +5717,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
-    resumeHistory?: ResumeHistoryUncheckedCreateNestedManyWithoutUserInput
+    resumeHistories?: ResumeHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutResumesInput = {
@@ -5727,7 +5727,7 @@ export namespace Prisma {
 
   export type ResumeHistoryCreateWithoutResumeInput = {
     createdAt?: Date | string
-    user: UserCreateNestedOneWithoutResumeHistoryInput
+    user: UserCreateNestedOneWithoutResumeHistoriesInput
   }
 
   export type ResumeHistoryUncheckedCreateWithoutResumeInput = {
@@ -5756,7 +5756,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    resumeHistory?: ResumeHistoryUpdateManyWithoutUserNestedInput
+    resumeHistories?: ResumeHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutResumesInput = {
@@ -5764,7 +5764,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    resumeHistory?: ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput
+    resumeHistories?: ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ResumeHistoryUpsertWithoutResumeInput = {
@@ -5780,7 +5780,7 @@ export namespace Prisma {
 
   export type ResumeHistoryUpdateWithoutResumeInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutResumeHistoryNestedInput
+    user?: UserUpdateOneRequiredWithoutResumeHistoriesNestedInput
   }
 
   export type ResumeHistoryUncheckedUpdateWithoutResumeInput = {
@@ -5789,14 +5789,14 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateWithoutResumeHistoryInput = {
+  export type UserCreateWithoutResumeHistoriesInput = {
     email: string
     name?: string | null
     createdAt?: Date | string
     resumes?: ResumeCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutResumeHistoryInput = {
+  export type UserUncheckedCreateWithoutResumeHistoriesInput = {
     id?: number
     email: string
     name?: string | null
@@ -5804,9 +5804,9 @@ export namespace Prisma {
     resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutResumeHistoryInput = {
+  export type UserCreateOrConnectWithoutResumeHistoriesInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutResumeHistoryInput, UserUncheckedCreateWithoutResumeHistoryInput>
+    create: XOR<UserCreateWithoutResumeHistoriesInput, UserUncheckedCreateWithoutResumeHistoriesInput>
   }
 
   export type ResumeCreateWithoutHistoryInput = {
@@ -5833,25 +5833,25 @@ export namespace Prisma {
     create: XOR<ResumeCreateWithoutHistoryInput, ResumeUncheckedCreateWithoutHistoryInput>
   }
 
-  export type UserUpsertWithoutResumeHistoryInput = {
-    update: XOR<UserUpdateWithoutResumeHistoryInput, UserUncheckedUpdateWithoutResumeHistoryInput>
-    create: XOR<UserCreateWithoutResumeHistoryInput, UserUncheckedCreateWithoutResumeHistoryInput>
+  export type UserUpsertWithoutResumeHistoriesInput = {
+    update: XOR<UserUpdateWithoutResumeHistoriesInput, UserUncheckedUpdateWithoutResumeHistoriesInput>
+    create: XOR<UserCreateWithoutResumeHistoriesInput, UserUncheckedCreateWithoutResumeHistoriesInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutResumeHistoryInput = {
+  export type UserUpdateToOneWithWhereWithoutResumeHistoriesInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutResumeHistoryInput, UserUncheckedUpdateWithoutResumeHistoryInput>
+    data: XOR<UserUpdateWithoutResumeHistoriesInput, UserUncheckedUpdateWithoutResumeHistoriesInput>
   }
 
-  export type UserUpdateWithoutResumeHistoryInput = {
+  export type UserUpdateWithoutResumeHistoriesInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     resumes?: ResumeUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutResumeHistoryInput = {
+  export type UserUncheckedUpdateWithoutResumeHistoriesInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
