@@ -8,7 +8,6 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { getFileNameWithoutExtension } from "@/lib";
 import { bucketName } from "@/constants";
-import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -43,12 +42,6 @@ export default function Home() {
 
   return (
     <Layout>
-      <Button
-        title="so"
-        onClick={() => {
-          signOut();
-        }}
-      />
       <div className="flex flex-col gap-[28px] mx-auto w-full max-w-[500px] pt-2 pb-10">
         <UploadContainer
           attachedFile={selectedFile}
@@ -71,11 +64,15 @@ export default function Home() {
           disabled={!selectedFile}
           onClick={async () => {
             if (!fileUrl || !selectedFile) return;
-            await axios.post("http://localhost:3000/api/upload", {
-              fileName: getFileNameWithoutExtension(selectedFile.name),
-              fileSize: selectedFile.size,
-              fileUrl: fileUrl,
-            });
+            try {
+              await axios.post("http://localhost:3000/api/upload", {
+                fileName: getFileNameWithoutExtension(selectedFile.name),
+                fileSize: selectedFile.size,
+                fileUrl: fileUrl,
+              });
+            } catch (error) {
+              toast.error("Something went wrong while extracting file data");
+            }
           }}
         />
       </div>
