@@ -92,7 +92,7 @@ export default function Home() {
               );
               dispatch(resetLoaderState());
               toast.success("Resume Data Extracted Successfully");
-              router.push(`/resume/${resume.data.resumeId}`);
+              router.push(`/resumes/${resume.data.resumeId}`);
             } catch (error) {
               toast.error("Something went wrong while extracting file data");
               dispatch(resetLoaderState());
