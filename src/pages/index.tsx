@@ -83,7 +83,7 @@ export default function Home() {
               );
               dispatch(setLoading({ loading: true }));
               const resume = await axios.post<ResumeUploadModel>(
-                "http://localhost:3000/api/upload",
+                `${process.env.NEXT_PUBLIC_BASE_URI}/api/upload`,
                 {
                   fileName: getFileNameWithoutExtension(selectedFile.name),
                   fileSize: selectedFile.size,

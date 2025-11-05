@@ -24,7 +24,7 @@ const Resumes = () => {
       dispatch(setLoading({ loading: true }));
 
       const resumesData = await axios.get<{ data: Resume[] }>(
-        "http://localhost:3000/api/resume"
+        `${process.env.NEXT_PUBLIC_BASE_URI}/api/resume`
       );
 
       if (!resumesData.data.data) return;

@@ -25,7 +25,7 @@ const ResumeHistory: NextPage = () => {
       dispatch(setLoading({ loading: true }));
 
       const resumesData = await axios.get<{ data: ResumeHistoryModel[] }>(
-        "http://localhost:3000/api/resume-history"
+        `${process.env.NEXT_PUBLIC_BASE_URI}/api/resume-history`
       );
 
       if (!resumesData.data.data) return;

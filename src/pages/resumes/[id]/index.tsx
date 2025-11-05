@@ -39,7 +39,7 @@ const Resume = () => {
       dispatch(setLoading({ loading: true }));
 
       const resumeInfo = await axios.get<{data: ResumeType}>(
-        "http://localhost:3000/api/resume/" + id
+        `${process.env.NEXT_PUBLIC_BASE_URI}/api/resume/${id}`
       );
       if (!resumeInfo) return;
 
