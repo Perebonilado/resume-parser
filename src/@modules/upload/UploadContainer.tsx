@@ -25,6 +25,7 @@ const UploadContainer: FC<Props> = ({
   const validateFileSize = (fileSize: number) => {
     const maxSizeInBytes = convertMegaBytesToBytes(maxFileSizeMB);
     if (fileSize > maxSizeInBytes) {
+      toast.error(`file size exceeds ${maxFileSizeMB}MB`)
       return false;
     } else {
       return true;
