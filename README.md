@@ -6,35 +6,31 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Architecture
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+1. Components live in the @shared and @modules folder - The @shared folder consists of two sub folders, components and ui. UI consists of building blockes reused throughout the application whereas the components folder holds larger components that are reused. The @modules folder holds components specific to certain modules/pages in the application. That way, it is easier to find components used in building a specific page
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Data flow - A repository folder holds the methods used in fetching data from the database. These methods are called in the api endpoints which eventually return data to the client. I utilized interfaces to serve as contracts for each repository, this allows us to switch from an orm like prisma to a different orm without interfering with any other parts of the code except the repository which implements those contracts.
 
-## Learn More
+3. Prompts are stored int he prompts folder.
 
-To learn more about Next.js, take a look at the following resources:
+4. Third party integrations such as mistral are stored in the integrations folder
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+5. The business folder holds the business logic. In this case, the logic for uploading and parsing the resume data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+6. The schemas used to enforce the json the ai model returns is stored in the zodschemas folder, allowing for clear separation of json structures returned from the ai model
 
-## Deploy on Vercel
+7. Shared state exist in the features folder which is basically a redux integration.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+8. Routes are protected using the proxy.ts which was originally middleware
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+9. Authorization and error handling on apis are run through middleware structured as HOC's, preventing code duplication.
+
+## Summary
+When data is requested, this request is routed to the endpoint which calls a repository method to return the data.
+When data needs to be saved to the db and run though some business logic, the request hits the endpoint and a service within the business folder is called to handle this.
