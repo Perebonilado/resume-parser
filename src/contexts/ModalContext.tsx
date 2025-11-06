@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useState } from "react";
 import Modal from "@/@shared/components/Modal";
 
 interface ContextOptions {

@@ -1,9 +1,7 @@
 import { AppLoader } from "@/@shared/components/AppLoader";
 import { RootState } from "@/config/redux-config";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSession } from "next-auth/react";
-import { setUser } from "@/features/userSlice";
+import React from "react";
+import { useSelector } from "react-redux";
 
 interface ContextOptions {}
 
