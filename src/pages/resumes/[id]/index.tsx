@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useGetResumeByIdQuery } from "@/api-services/resume.service";
 import { useLoadingSuccessAndError } from "@/hooks/useLoadingSuccessAndError";
+import Button from "@/@shared/ui/Button";
 
 const Resume = () => {
   const [id, setId] = useState<number | null>(null);
@@ -17,6 +18,7 @@ const Resume = () => {
     isError: error,
     data: resume,
     isLoading: loading,
+    refetch
   } = useGetResumeByIdQuery({ id: `${id}` }, { skip: !id });
 
   useLoadingSuccessAndError({
@@ -49,6 +51,14 @@ const Resume = () => {
             <ResumeSkills skills={resume.data.skills} />
           </>
         )}
+
+        {!resume?.data && (
+          <p className="text-center text-gray-400">No Resume Data</p>
+        )}
+
+        {
+          !resume?.data && error && <Button title="Reload" className="mx-auto" onClick={refetch} />
+        }
       </Container>
     </Layout>
   );

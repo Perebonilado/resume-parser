@@ -1,4 +1,5 @@
 import ResumeList from "@/@modules/resumes/ResumeList";
+import Button from "@/@shared/ui/Button";
 import Container from "@/@shared/ui/Container";
 import { useGetResumesQuery } from "@/api-services/resume.service";
 import { useLoadingSuccessAndError } from "@/hooks/useLoadingSuccessAndError";
@@ -9,6 +10,7 @@ const Resumes = () => {
     data: resumes,
     isLoading: loading,
     isError: error,
+    refetch,
   } = useGetResumesQuery("");
 
   useLoadingSuccessAndError({
@@ -35,6 +37,14 @@ const Resumes = () => {
               };
             })}
           />
+        )}
+
+        {resumes && !resumes.data.length ? (
+          <p className="text-center text-gray-400">No Resumes Data</p>
+        ) : null}
+
+        {error && !resumes && (
+          <Button title="Reload" className="mx-auto" onClick={refetch} />
         )}
       </Container>
     </Layout>

@@ -4,12 +4,14 @@ import Layout from "@/layout";
 import { NextPage } from "next";
 import { useGetResumeHistoryQuery } from "@/api-services/resume-history.service";
 import { useLoadingSuccessAndError } from "@/hooks/useLoadingSuccessAndError";
+import Button from "@/@shared/ui/Button";
 
 const ResumeHistory: NextPage = () => {
   const {
     data: resumeHistory,
     isError: error,
     isLoading: loading,
+    refetch,
   } = useGetResumeHistoryQuery("");
 
   useLoadingSuccessAndError({
@@ -38,10 +40,17 @@ const ResumeHistory: NextPage = () => {
             })}
           />
         )}
+
+        {resumeHistory && !resumeHistory.data.length ? (
+          <p className="text-center text-gray-400">No Resume History</p>
+        ) : null}
+
+        {error && !resumeHistory && (
+          <Button title="Reload" className="mx-auto" onClick={refetch} />
+        )}
       </Container>
     </Layout>
   );
 };
 
 export default ResumeHistory;
-
