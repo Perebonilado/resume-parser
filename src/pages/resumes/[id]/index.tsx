@@ -6,23 +6,25 @@ import ResumeWorkExperience from "@/@modules/resumes/ResumeWorkExperience";
 import Container from "@/@shared/ui/Container";
 import Layout from "@/layout";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
-import {
-  resetLoaderState,
-  setLoading,
-  setLoadingMessage,
-} from "@/features/loaderSlice";
-import { Resume as ResumeType } from "@/zodSchemas/ResumeSchema";
-import axios from "axios";
 import { useRouter } from "next/router";
+import { useGetResumeByIdQuery } from "@/api-services/resume.service";
+import { useLoadingSuccessAndError } from "@/hooks/useLoadingSuccessAndError";
 
 const Resume = () => {
-  const [resume, setResume] = useState<ResumeType | null>(null);
   const [id, setId] = useState<number | null>(null);
   const router = useRouter();
-  const dispatch = useDispatch();
+  const {
+    isError: error,
+    data: resume,
+    isLoading: loading,
+  } = useGetResumeByIdQuery({ id: `${id}` }, { skip: !id });
+
+  useLoadingSuccessAndError({
+    error,
+    errorMessage: "Failed to load resume information",
+    loadingMessage: "Loading resume",
+    loading,
+  });
 
   useEffect(() => {
     if (router.query) {
@@ -31,49 +33,20 @@ const Resume = () => {
     }
   }, [router.query]);
 
-  const fetchResumeData = async () => {
-    try {
-      dispatch(
-        setLoadingMessage({ loadingMessage: "Fetching resume details" })
-      );
-      dispatch(setLoading({ loading: true }));
-
-      const resumeInfo = await axios.get<{data: ResumeType}>(
-        `${process.env.NEXT_PUBLIC_BASE_URI}/api/resume/${id}`
-      );
-      if (!resumeInfo) return;
-
-      console.log(resumeInfo.data.data)
-
-      setResume(resumeInfo.data.data);
-    } catch (error) {
-      console.log(error);
-      toast.error("something went wrong fetching resume data");
-    } finally {
-      dispatch(resetLoaderState());
-    }
-  };
-
-  useEffect(() => {
-    if (id) {
-      fetchResumeData();
-    }
-  }, [id]);
-
   return (
     <Layout>
       <Container className="py-10">
-        {!resume && (
+        {!resume?.data && (
           <p className="text-center text-gray-500">Resume Data Unavailable</p>
         )}
 
-        {resume && (
+        {resume?.data && (
           <>
-            <ResumeHeader data={resume} />
-            <ResumeSummary summary={resume.summary} />
-            <ResumeWorkExperience experiences={resume.workExperience} />
-            <ResumeEducation education={resume.education} />
-            <ResumeSkills skills={resume.skills} />
+            <ResumeHeader data={resume.data} />
+            <ResumeSummary summary={resume.data.summary} />
+            <ResumeWorkExperience experiences={resume.data.workExperience} />
+            <ResumeEducation education={resume.data.education} />
+            <ResumeSkills skills={resume.data.skills} />
           </>
         )}
       </Container>

@@ -4,24 +4,30 @@ import { useState } from "react";
 import Button from "@/@shared/ui/Button";
 import { toast } from "react-toastify";
 import { supabase } from "@/lib/supabase";
-import axios from "axios";
 import { nanoid } from "nanoid";
 import { getFileNameWithoutExtension } from "@/lib";
 import { bucketName } from "@/constants";
-import { useDispatch } from "react-redux";
-import {
-  resetLoaderState,
-  setLoading,
-  setLoadingMessage,
-} from "@/features/loaderSlice";
 import { useRouter } from "next/router";
-import { ResumeUploadModel } from "@/business/ResumeUploadHandler";
+import { useUploadMutation } from "@/api-services/upload.service";
+import { useLoadingSuccessAndError } from "@/hooks/useLoadingSuccessAndError";
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
-  const dispatch = useDispatch();
+  const [upload, { isLoading: isUploadingLoading, isError: error, isSuccess, data: resumeUploadData }] =
+    useUploadMutation();
+  useLoadingSuccessAndError({
+    error: error,
+    errorMessage: "Something went wrong while extracting file data",
+    loading: isUploadingLoading,
+    loadingMessage: "Extracting information",
+    isSuccess,
+    onSuccess() {
+      router.push(`/resumes/${resumeUploadData!.resumeId}`);
+    },
+    successMessage: "Resume Data Extracted Successfully"
+  });
 
   const handleUploadFileToBucket = async (file: File) => {
     try {
@@ -75,28 +81,11 @@ export default function Home() {
           disabled={!selectedFile}
           onClick={async () => {
             if (!fileUrl || !selectedFile) return;
-            try {
-              dispatch(
-                setLoadingMessage({
-                  loadingMessage: "Extracting Resume Data",
-                })
-              );
-              dispatch(setLoading({ loading: true }));
-              const resume = await axios.post<ResumeUploadModel>(
-                `${process.env.NEXT_PUBLIC_BASE_URI}/api/upload`,
-                {
-                  fileName: getFileNameWithoutExtension(selectedFile.name),
-                  fileSize: selectedFile.size,
-                  fileUrl: fileUrl,
-                }
-              );
-              dispatch(resetLoaderState());
-              toast.success("Resume Data Extracted Successfully");
-              router.push(`/resumes/${resume.data.resumeId}`);
-            } catch (error) {
-              toast.error("Something went wrong while extracting file data");
-              dispatch(resetLoaderState());
-            }
+            upload({
+              fileName: getFileNameWithoutExtension(selectedFile.name),
+              fileSize: selectedFile.size,
+              fileUrl: fileUrl,
+            });
           }}
         />
       </div>
