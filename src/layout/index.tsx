@@ -39,9 +39,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
 
         <main className="flex-1 w-full md:overflow-y-auto">
           {/* Desktop-only header actions */}
-          <div className="max-md:hidden flex items-center justify-between border-b border-b-gray-300 py-2">
+          <div className="max-md:hidden flex items-center justify-between border-b border-b-gray-300 py-2 min-h-[40px]">
             {
-              <Button
+              router.pathname !== '/' && <Button
                 title="Back"
                 variant="text"
                 starticon={<ChevronLeft />}
