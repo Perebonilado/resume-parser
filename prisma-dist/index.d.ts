@@ -1096,10 +1096,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     id: number | null
+    credits: number | null
   }
 
   export type UserSumAggregateOutputType = {
     id: number | null
+    credits: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1107,6 +1109,7 @@ export namespace Prisma {
     email: string | null
     name: string | null
     createdAt: Date | null
+    credits: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1114,6 +1117,7 @@ export namespace Prisma {
     email: string | null
     name: string | null
     createdAt: Date | null
+    credits: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1121,16 +1125,19 @@ export namespace Prisma {
     email: number
     name: number
     createdAt: number
+    credits: number
     _all: number
   }
 
 
   export type UserAvgAggregateInputType = {
     id?: true
+    credits?: true
   }
 
   export type UserSumAggregateInputType = {
     id?: true
+    credits?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1138,6 +1145,7 @@ export namespace Prisma {
     email?: true
     name?: true
     createdAt?: true
+    credits?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1145,6 +1153,7 @@ export namespace Prisma {
     email?: true
     name?: true
     createdAt?: true
+    credits?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1152,6 +1161,7 @@ export namespace Prisma {
     email?: true
     name?: true
     createdAt?: true
+    credits?: true
     _all?: true
   }
 
@@ -1246,6 +1256,7 @@ export namespace Prisma {
     email: string
     name: string | null
     createdAt: Date
+    credits: number
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1272,6 +1283,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     createdAt?: boolean
+    credits?: boolean
     resumes?: boolean | User$resumesArgs<ExtArgs>
     resumeHistories?: boolean | User$resumeHistoriesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1282,6 +1294,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     createdAt?: boolean
+    credits?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1289,6 +1302,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     createdAt?: boolean
+    credits?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1296,9 +1310,10 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     createdAt?: boolean
+    credits?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "credits", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     resumes?: boolean | User$resumesArgs<ExtArgs>
     resumeHistories?: boolean | User$resumeHistoriesArgs<ExtArgs>
@@ -1318,6 +1333,7 @@ export namespace Prisma {
       email: string
       name: string | null
       createdAt: Date
+      credits: number
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1747,6 +1763,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly credits: FieldRef<"User", 'Int'>
   }
     
 
@@ -4459,7 +4476,8 @@ export namespace Prisma {
     id: 'id',
     email: 'email',
     name: 'name',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    credits: 'credits'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -4614,6 +4632,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
+    credits?: IntFilter<"User"> | number
     resumes?: ResumeListRelationFilter
     resumeHistories?: ResumeHistoryListRelationFilter
   }
@@ -4623,6 +4642,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    credits?: SortOrder
     resumes?: ResumeOrderByRelationAggregateInput
     resumeHistories?: ResumeHistoryOrderByRelationAggregateInput
   }
@@ -4635,6 +4655,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
+    credits?: IntFilter<"User"> | number
     resumes?: ResumeListRelationFilter
     resumeHistories?: ResumeHistoryListRelationFilter
   }, "id" | "email">
@@ -4644,6 +4665,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    credits?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -4659,6 +4681,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    credits?: IntWithAggregatesFilter<"User"> | number
   }
 
   export type ResumeWhereInput = {
@@ -4790,6 +4813,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
+    credits?: number
     resumes?: ResumeCreateNestedManyWithoutUserInput
     resumeHistories?: ResumeHistoryCreateNestedManyWithoutUserInput
   }
@@ -4799,6 +4823,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
+    credits?: number
     resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
     resumeHistories?: ResumeHistoryUncheckedCreateNestedManyWithoutUserInput
   }
@@ -4807,6 +4832,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credits?: IntFieldUpdateOperationsInput | number
     resumes?: ResumeUpdateManyWithoutUserNestedInput
     resumeHistories?: ResumeHistoryUpdateManyWithoutUserNestedInput
   }
@@ -4816,6 +4842,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credits?: IntFieldUpdateOperationsInput | number
     resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
     resumeHistories?: ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -4825,12 +4852,14 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
+    credits?: number
   }
 
   export type UserUpdateManyMutationInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credits?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -4838,6 +4867,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credits?: IntFieldUpdateOperationsInput | number
   }
 
   export type ResumeCreateInput = {
@@ -5036,10 +5066,12 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     createdAt?: SortOrder
+    credits?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
+    credits?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -5047,6 +5079,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     createdAt?: SortOrder
+    credits?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -5054,10 +5087,12 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     createdAt?: SortOrder
+    credits?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
+    credits?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5303,6 +5338,14 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type ResumeUpdateManyWithoutUserNestedInput = {
     create?: XOR<ResumeCreateWithoutUserInput, ResumeUncheckedCreateWithoutUserInput> | ResumeCreateWithoutUserInput[] | ResumeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ResumeCreateOrConnectWithoutUserInput | ResumeCreateOrConnectWithoutUserInput[]
@@ -5329,14 +5372,6 @@ export namespace Prisma {
     update?: ResumeHistoryUpdateWithWhereUniqueWithoutUserInput | ResumeHistoryUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ResumeHistoryUpdateManyWithWhereWithoutUserInput | ResumeHistoryUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ResumeHistoryScalarWhereInput | ResumeHistoryScalarWhereInput[]
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type ResumeUncheckedUpdateManyWithoutUserNestedInput = {
@@ -5709,6 +5744,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
+    credits?: number
     resumeHistories?: ResumeHistoryCreateNestedManyWithoutUserInput
   }
 
@@ -5717,6 +5753,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
+    credits?: number
     resumeHistories?: ResumeHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -5756,6 +5793,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credits?: IntFieldUpdateOperationsInput | number
     resumeHistories?: ResumeHistoryUpdateManyWithoutUserNestedInput
   }
 
@@ -5764,6 +5802,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credits?: IntFieldUpdateOperationsInput | number
     resumeHistories?: ResumeHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -5793,6 +5832,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
+    credits?: number
     resumes?: ResumeCreateNestedManyWithoutUserInput
   }
 
@@ -5801,6 +5841,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     createdAt?: Date | string
+    credits?: number
     resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -5848,6 +5889,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credits?: IntFieldUpdateOperationsInput | number
     resumes?: ResumeUpdateManyWithoutUserNestedInput
   }
 
@@ -5856,6 +5898,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credits?: IntFieldUpdateOperationsInput | number
     resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
   }
 

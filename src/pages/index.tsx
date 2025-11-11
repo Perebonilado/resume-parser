@@ -10,13 +10,22 @@ import { bucketName } from "@/constants";
 import { useRouter } from "next/router";
 import { useUploadMutation } from "@/api-services/upload.service";
 import { useLoadingSuccessAndError } from "@/hooks/useLoadingSuccessAndError";
+import CreditsLeft from "@/@modules/credits/CreditsLeft";
+import { useGetUserDataQuery } from "@/api-services/user.service";
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
-  const [upload, { isLoading: isUploadingLoading, isError: error, isSuccess, data: resumeUploadData }] =
-    useUploadMutation();
+  const [
+    upload,
+    {
+      isLoading: isUploadingLoading,
+      isError: error,
+      isSuccess,
+      data: resumeUploadData,
+    },
+  ] = useUploadMutation();
   useLoadingSuccessAndError({
     error: error,
     errorMessage: "Something went wrong while extracting file data",
@@ -26,7 +35,7 @@ export default function Home() {
     onSuccess() {
       router.push(`/resumes/${resumeUploadData!.resumeId}`);
     },
-    successMessage: "Resume Data Extracted Successfully"
+    successMessage: "Resume Data Extracted Successfully",
   });
 
   const handleUploadFileToBucket = async (file: File) => {
@@ -57,9 +66,15 @@ export default function Home() {
 
   const router = useRouter();
 
+  const { data } = useGetUserDataQuery("");
+  const credits = data?.data.credits || 0;
+
   return (
     <Layout>
       <div className="flex flex-col gap-[28px] mx-auto w-full max-w-[500px] pt-2 pb-10">
+        <div className="flex items-end">
+          <CreditsLeft credits={credits} />
+        </div>
         <UploadContainer
           attachedFile={selectedFile}
           handleSelectFile={async (file) => {

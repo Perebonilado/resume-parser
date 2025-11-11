@@ -124,7 +124,8 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   name: 'name',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  credits: 'credits'
 };
 
 exports.Prisma.ResumeScalarFieldEnum = {

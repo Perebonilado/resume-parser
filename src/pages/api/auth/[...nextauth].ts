@@ -30,6 +30,7 @@ export const authOptions = {
           return true;
         }
       } catch (error) {
+        console.log(error)
         return false;
       }
     },

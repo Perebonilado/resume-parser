@@ -12,3 +12,11 @@ export const getFileNameWithoutExtension = (name: string) => {
 export const secondsToMilliSeconds = (seconds: number): number => {
   return seconds * milliSecondToSecondConversionRate;
 };
+
+export const getCreditAmountByPlanId = (id: string) => {
+  if (id === process.env.STRIPE_PRICE_BASIC) {
+    return 10_000;
+  }
+
+  return 20_000;
+};
