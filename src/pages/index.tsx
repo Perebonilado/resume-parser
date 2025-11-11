@@ -66,7 +66,7 @@ export default function Home() {
 
   const router = useRouter();
 
-  const { data } = useGetUserDataQuery("");
+  const { data } = useGetUserDataQuery("", { pollingInterval: 1000 });
   const credits = data?.data.credits || 0;
 
   return (
@@ -87,6 +87,7 @@ export default function Home() {
             setSelectedFile(null);
             setFileUrl(null);
           }}
+          credits={credits}
           uploadLoading={isUploading}
         />
 

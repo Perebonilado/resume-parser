@@ -13,10 +13,14 @@ import {
   ResumeRepository,
   ResumeRepositoryImpl,
 } from "@/repository/ResumeRepository";
-import { UserRepository, UserRepositoryImpl } from "@/repository/UserRepository";
+import {
+  UserRepository,
+  UserRepositoryImpl,
+} from "@/repository/UserRepository";
 import { ResumeSchema } from "@/zodSchemas/ResumeSchema";
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateObject } from "ai";
+import { creditHandler } from "./CreditHandler";
 
 export interface ResumeUploadModel {
   resumeId: number;
@@ -29,9 +33,9 @@ export const resumeUploadHandler = async (
 ): Promise<ResumeUploadModel> => {
   try {
     const userRepository: UserRepository = new UserRepositoryImpl();
-    const user = await userRepository.findByEmail(userEmail)
+    const user = await userRepository.findByEmail(userEmail);
     if (!user) {
-        throw new Error("user not found");
+      throw new Error("user not found");
     }
 
     const userId = user.id;
@@ -85,6 +89,12 @@ export const resumeUploadHandler = async (
         { userId, resumeId: createdResume.id },
         tx
       );
+
+      await creditHandler({
+        email: user.email,
+        mutationType: "decrement",
+        mutationValue: 100,
+      });
 
       return { createdResume, resumeHistory };
     });

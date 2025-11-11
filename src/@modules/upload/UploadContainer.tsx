@@ -11,13 +11,15 @@ interface Props {
   handleDeleteFile: () => void;
   attachedFile: File | null;
   uploadLoading: boolean;
+  credits: number;
 }
 
 const UploadContainer: FC<Props> = ({
   handleSelectFile,
   attachedFile,
   handleDeleteFile,
-  uploadLoading
+  uploadLoading,
+  credits,
 }) => {
   const maxFileSizeMB = 10;
   const allowedTypes = ["pdf"];
@@ -25,7 +27,7 @@ const UploadContainer: FC<Props> = ({
   const validateFileSize = (fileSize: number) => {
     const maxSizeInBytes = convertMegaBytesToBytes(maxFileSizeMB);
     if (fileSize > maxSizeInBytes) {
-      toast.error(`file size exceeds ${maxFileSizeMB}MB`)
+      toast.error(`file size exceeds ${maxFileSizeMB}MB`);
       return false;
     } else {
       return true;
@@ -64,9 +66,7 @@ const UploadContainer: FC<Props> = ({
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <PDFIconAlt />
                 </div>
-                <p className="text-xl font-semibold">
-                  Upload your resume here
-                </p>
+                <p className="text-xl font-semibold">Upload your resume here</p>
                 <p className="text-[#00000080] text-xs mt-1">
                   Max size: {maxFileSizeMB}mb pdf files only
                 </p>
@@ -77,6 +77,10 @@ const UploadContainer: FC<Props> = ({
                   onClick={() => {
                     if (uploadLoading) {
                       toast.error("Please wait until your test is ready");
+                      return;
+                    }
+                    if (credits < 100) {
+                      toast.error("Insuffecient credits");
                       return;
                     }
                     filesRef.current?.click();
