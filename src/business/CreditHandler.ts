@@ -26,7 +26,7 @@ export const creditHandler = async (
         creditValue: credits,
       };
     } else {
-      const credits = await userRepository.increaseUserCredit(
+      const credits = await userRepository.decreaseUserCredit(
         dto.email,
         dto.mutationValue
       );
